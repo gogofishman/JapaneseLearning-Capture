@@ -1,0 +1,44 @@
+.sub-window {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, .5);
+    z-index: 100;
+}
+
+#dialogBox-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 300px;
+    border-radius: 10px;
+    padding: 20px 30px 20px 30px;
+    background-color: var(--color-background-main-light2);
+    z-index: 999;
+
+    & #dialogBox-container-text{
+        line-height: 1.6;
+        margin: 20px 0 30px 0;
+        text-align: center;
+    }
+}
+
+#translatr-api-container {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 180px;
+    border-radius: 10px;
+    padding: 20px 30px 20px 30px;
+    background-color: var(--color-background-main-light2);
+
+    & .long-input {
+        width: 250px;
+        text-align: left !important;
+    }
+}

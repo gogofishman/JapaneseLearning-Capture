@@ -1,0 +1,356 @@
+* {
+    --color-background-main: #1e1e1e;
+    --color-background-main-light: #323232;
+    --color-background-main-light1: rgb(40, 40, 40);
+    --color-background-main-light2: #3c3c3c;
+    --color-background-main-light3: #5a5a5a;
+
+    --color-icon-main: #E58EB5;
+    --color-icon-main-light: #f3d3e1;
+
+    --color-text-main: #dcdcdc;
+    --color-text-black: #282828;
+}
+
+.state-none {
+    display: none !important;
+}
+
+.state-hidden {
+    visibility: hidden !important;
+}
+
+body, html {
+    height: 100%;
+    min-width: 650px;
+    min-height: 450px;
+}
+
+body {
+    background-color: var(--color-background-main);
+    overflow-wrap: break-word;
+    user-select: none;
+    color: var(--color-text-main);
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+    fill: var(--color-icon-main);
+}
+
+.tab-container {
+    width: 60px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    & .tab-icon-container {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & .tab-icon {
+            width: 50%;
+            height: 50%;
+        }
+
+        &.selected {
+            fill: var(--color-icon-main-light);
+        }
+    }
+}
+
+.main-container {
+    flex: 1;
+    background-color: var(--color-background-main-light1);
+
+    & .main-container-tabView {
+        height: 100%;
+    }
+}
+
+/*刮削界面*/
+.main-scrape-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 40px 40px 20px 40px;
+}
+
+.table-container {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--color-background-main-light2);
+    overflow-y: auto;
+}
+
+/*表格*/
+table {
+    border-collapse: collapse;
+    width: 100%;
+    user-select: text;
+
+    & thead {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    & tbody {
+        text-align: left;
+        font-size: 14px;
+    }
+
+    & input {
+        margin: 0;
+        box-sizing: border-box;
+        background-color: var(--color-background-main-light2);
+        width: 100%;
+        text-align: left;
+        border-radius: 0;
+        border: none;
+
+        &:focus {
+            border: none;
+            outline: none;
+        }
+    }
+
+    & .table-checkbox {
+        height: 12px;
+        transform: translateY(2px);
+
+        & .table-checkbox-icon {
+            fill: var(--color-text-main);
+
+            &.checkbox-selected {
+                fill: var(--color-icon-main);
+            }
+        }
+
+        &:hover .table-checkbox-icon {
+            fill: var(--color-icon-main-light);
+        }
+    }
+}
+
+th, td {
+    border: 1px solid var(--color-background-main-light3); /* 单元格边框 */
+    padding: 8px; /* 单元格内边距 */
+    height: 16px;
+}
+
+/*控制台*/
+.control-container {
+    padding-top: 20px;
+    height: 100px;
+
+    & .input-path-container {
+        width: 100%;
+        height: 2em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & label {
+            width: 70px;
+        }
+
+        & #refresh-button {
+            margin-left: 4px;
+            box-sizing: border-box;
+            height: 100%;
+            padding: 5px;
+            transition: all 0.1s;
+
+            &:active {
+                fill: var(--color-icon-main-light);
+            }
+        }
+    }
+
+    & #input-path {
+        border-radius: 5px;
+        width: 100%;
+        height: 100%;
+        padding: 0 10px 0 10px;
+        background-color: var(--color-background-main-light2);
+        text-align: left;
+        border: none;
+
+        &:focus {
+            border: none;
+            outline: none;
+        }
+    }
+
+    & .control-button-container {
+        width: 100%;
+        height: 2em;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+
+    }
+}
+
+/*设置界面*/
+.setting-box {
+    margin: 40px;
+
+    & .setting-box-sub {
+        margin-top: 10px;
+        padding: 10px 20px 10px 20px;
+        border-radius: 5px;
+        background-color: var(--color-background-main-light2);
+    }
+}
+
+.setting-item {
+    padding: 10px 0 10px 0;
+    height: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*控件*/
+.switch {
+    background-color: var(--color-background-main-light1);
+    border-radius: 14px;
+    box-sizing: border-box;
+    display: inline-flex;
+    position: relative;
+    transition-behavior: normal;
+    transition-duration: 0.2s;
+    transition-timing-function: cubic-bezier(0.38, 0, 0.24, 1);
+    transition-delay: 0s;
+    transition-property: all;
+    width: 36px;
+    height: 18px;
+    padding: 3px;
+
+    & .switch-handle {
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.09) 0 2px 4px;
+        box-sizing: border-box;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        position: relative;
+        transition-behavior: normal;
+        transition-duration: 0.2s;
+        transition-timing-function: cubic-bezier(0.38, 0, 0.24, 1);
+        transition-delay: 0s;
+        transition-property: all;
+        z-index: 2;
+        background-color: var(--color-icon-main);
+    }
+
+    &.switch-on {
+        background-color: var(--color-icon-main);
+    }
+
+    &.switch-on .switch-handle {
+        transform: translateX(17px);
+        background: var(--color-background-main-light2);
+    }
+}
+
+.combobox {
+    cursor: pointer;
+    height: 22px;
+    border-radius: 5px;
+    background-color: var(--color-background-main-light1);
+    color: var(--color-text-main);
+    border: 1px solid var(--color-background-main-light1);
+
+    & option {
+        border-radius: 0;
+        background-color: var(--color-background-main-light1);
+        border: 0
+    }
+}
+
+/*按钮*/
+.button {
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    width: 70px;
+    background-color: var(--color-icon-main);
+    border-radius: 5px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--color-text-black);
+    transition: all 0.1s;
+
+    &:active {
+        background-color: var(--color-icon-main-light);
+    }
+}
+
+/*输入框*/
+input {
+    width: 60px;
+    height: 16px;
+    background-color: var(--color-background-main-light1);
+    color: var(--color-text-main);
+    border: 2px solid var(--color-background-main-light1);
+    border-radius: 5px;
+    box-sizing: content-box;
+    text-align: right;
+    padding: 0 5px 0 5px;
+
+    &:focus {
+        border: 2px solid var(--color-icon-main);
+        outline: none;
+    }
+
+    &.long-input {
+        width: 300px;
+    }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+a{
+    color: var(--color-icon-main);
+
+    &:active{
+        color: var(--color-icon-main-light);
+    }
+}
+
+/*滚动条*/
+/* 隐藏浏览器默认滚动条 */
+::-webkit-scrollbar {
+    width: 10px; /* 设置滚动条宽度 */
+    height: 0;
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+    background-color: transparent; /* 设置轨道背景颜色 */
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    border-radius: 10px; /* 设置滑块边角的圆角 */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-background-main-light3);
+}
