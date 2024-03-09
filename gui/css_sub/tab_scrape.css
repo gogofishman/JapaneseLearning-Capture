@@ -1,0 +1,198 @@
+/*整个刮削界面*/
+.main-scrape-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+
+    border-left: var(--border-width) solid var(--color-background-alter2);
+    background-color: var(--color-background);
+}
+
+/*顶部条*/
+.top-container {
+    width: 100%;
+    height: 60px;
+    border-bottom: var(--border-width) solid var(--color-background-alter2);
+
+    & .input-path-container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/*路径输入编辑框*/
+.input-path-container-line {
+    width: 65%;
+    position: relative;
+
+    & #input-path {
+        width: 100%;
+        height: 34px;
+        box-sizing: border-box;
+        border-radius: 50px;
+        background-color: var(--color-background);
+        border: var(--border-width) solid var(--color-background-alter2);
+        text-align: left;
+        padding: 0 40px 0 43px;
+
+        &:focus {
+            border: var(--border-width) solid var(--color-icon-strong);
+            outline: none;
+        }
+    }
+
+    & .input-path-icon {
+        position: absolute;
+        top: 0;
+        left: 6px;
+        box-sizing: border-box;
+        height: 100%;
+        padding: 6px;
+        fill: var(--color-background-alter4);
+    }
+
+    & #refresh-button {
+        position: absolute;
+        top: 0;
+        right: 2px;
+        box-sizing: border-box;
+        height: 100%;
+        padding: 5px;
+        cursor: pointer;
+        transition: fill 0.1s, transform 0.3s;
+        fill: var(--color-background-alter4);
+
+        &:hover {
+            fill: var(--color-icon-strong);
+        }
+    }
+}
+
+
+/*控制台和表格区域*/
+.control-and-table {
+    flex: 1;
+    background-color: var(--color-background-alter1);
+    display: flex;
+    flex-direction: column;
+}
+
+/*控制台*/
+.control-container {
+    padding: 0 20px 0 20px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+
+    & .control-button-container {
+        width: 250px;
+        height: 2em;
+        padding: 0 60px 0 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+/*进度条*/
+.progress-bar-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10px 0 10px;
+
+    & .progress-bar-text-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 13px;
+    }
+
+    & .progress-bar {
+        width: 100%;
+        margin-top: 10px;
+
+        & .progress-bar-background {
+            width: 100%;
+            height: 8px;
+            background-color: var(--color-background-alter3);
+            border-radius: 5px;
+        }
+
+        & .progress-bar-top {
+            width: 30%;
+            height: 100%;
+            background-color: var(--color-icon-strong);
+            border-radius: 5px;
+            transition: all .2s;
+        }
+    }
+}
+
+
+.table-container {
+    flex: 1;
+    padding: 0 20px 0 20px;
+    border-radius: 5px;
+    background-color: var(--color-background);
+    overflow-y: auto;
+}
+
+/*表格*/
+table {
+    border-collapse: collapse;
+    width: 100%;
+    user-select: text;
+
+    & thead {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    & tbody {
+        text-align: left;
+        font-size: 14px;
+    }
+
+    & input {
+        margin: 0;
+        box-sizing: border-box;
+        background-color: var(--color-background-alter2);
+        width: 100%;
+        text-align: left;
+        border-radius: 0;
+        border: none;
+
+        &:focus {
+            border: none;
+            outline: none;
+        }
+    }
+
+    & .table-checkbox {
+        height: 12px;
+        transform: translateY(2px);
+
+        & .table-checkbox-icon {
+            fill: var(--color-text);
+
+            &.checkbox-selected {
+                fill: var(--color-icon);
+            }
+        }
+
+        &:hover .table-checkbox-icon {
+            fill: var(--color-icon-strong);
+        }
+    }
+}
+
+th, td {
+    border: 1px solid var(--color-background-alter4); /* 单元格边框 */
+    padding: 8px; /* 单元格内边距 */
+    height: 16px;
+}

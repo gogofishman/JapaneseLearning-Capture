@@ -18,7 +18,7 @@
     width: 300px;
     border-radius: 10px;
     padding: 20px 30px 20px 30px;
-    background-color: var(--color-background-main-light2);
+    background-color: var(--color-background-alter2);
     z-index: 999;
 
     & #dialogBox-container-text{
@@ -35,7 +35,7 @@
     height: 180px;
     border-radius: 10px;
     padding: 20px 30px 20px 30px;
-    background-color: var(--color-background-main-light2);
+    background-color: var(--color-background-alter2);
 
     & .long-input {
         width: 250px;

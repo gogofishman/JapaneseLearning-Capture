@@ -5,12 +5,15 @@
     <title>Title</title>
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="subWindow.css">
+    <link rel="stylesheet" href="css_sub/tab_scrape.css">
+    <link rel="stylesheet" href="css_sub/tab_setting.css">
+    <link rel="stylesheet" href="css_sub/subWindow.css">
 </head>
 <body>
 <div class="container">
     <div class="tab-container">
         <div class="tab-icon-container" connect="main-scrape">
+            <div class="tab-icon-selected"></div>
             <div class="tab-icon">
                 <svg t="1708934279888" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="5730" width="100%" height="100%">
@@ -19,6 +22,7 @@
             </div>
         </div>
         <div class="tab-icon-container" connect="main-setting">
+            <div class="tab-icon-selected"></div>
             <div class="tab-icon">
                 <svg t="1708934312769" class="icon" viewBox="0 0 1024 1024" version="1.1"
                      xmlns="http://www.w3.org/2000/svg" p-id="6727" width="100%" height="100%">
@@ -33,38 +37,64 @@
         <!--        刮削-->
         <div id="main-scrape" class="main-container-tabView">
             <div class="main-scrape-container">
-                <div class="table-container">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th style="width: 5%"></th>
-                            <th style="width: 35%">文件名</th>
-                            <th style="width: 15%">大小 GB</th>
-                            <th style="width: 20%">番号</th>
-                            <th style="width: 15%">状态</th>
-                        </tr>
-                        </thead>
-                        <tbody id="files-table">
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="control-container">
+                <div class="top-container">
                     <!-- 输入路径-->
                     <div class="input-path-container">
-                        <label for="input-path">目录：</label><input id="input-path" type="text">
-                        <div id="refresh-button">
-                            <svg t="1709013699284" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                                 xmlns="http://www.w3.org/2000/svg" p-id="4965" width="100%" height="100%">
-                                <path d="M721.066667 725.333333c-59.733333 55.466667-132.266667 85.333333-209.066667 85.333334-157.866667 0-290.133333-123.733333-298.666667-281.6l12.8 12.8c8.533333 8.533333 17.066667 12.8 29.866667 12.8s21.333333-4.266667 29.866667-12.8c17.066667-17.066667 17.066667-42.666667 0-59.733334l-85.333334-85.333333c-17.066667-17.066667-42.666667-17.066667-59.733333 0l-85.333333 85.333333c-17.066667 17.066667-17.066667 42.666667 0 59.733334s42.666667 17.066667 59.733333 0l12.8-12.8c8.533333 204.8 179.2 366.933333 384 366.933333 98.133333 0 192-38.4 268.8-110.933333 17.066667-17.066667 17.066667-42.666667 0-59.733334-12.8-17.066667-42.666667-17.066667-59.733333 0zM968.533333 482.133333c-17.066667-17.066667-42.666667-17.066667-59.733333 0l-12.8 12.8C887.466667 290.133333 716.8 128 512 128c-98.133333 0-192 38.4-268.8 110.933333-17.066667 17.066667-17.066667 42.666667 0 59.733334 17.066667 17.066667 42.666667 17.066667 59.733333 0 59.733333-55.466667 132.266667-85.333333 209.066667-85.333334 157.866667 0 290.133333 123.733333 298.666667 281.6l-12.8-12.8c-17.066667-17.066667-42.666667-17.066667-59.733334 0s-17.066667 42.666667 0 59.733334l85.333334 85.333333c8.533333 8.533333 21.333333 12.8 29.866666 12.8s21.333333-4.266667 29.866667-12.8l85.333333-85.333333c17.066667-17.066667 17.066667-42.666667 0-59.733334z"></path>
-                            </svg>
+                        <div class="input-path-container-line">
+                            <input id="input-path" type="text">
+                            <label for="input-path" class="input-path-icon">
+                                <svg t="1709966915485" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                     xmlns="http://www.w3.org/2000/svg" p-id="17558" width="100%" height="100%">
+                                    <path d="M895.8 592.1a32.2 32.1 0 1 0 64.4 0 32.2 32.1 0 1 0-64.4 0Z"></path>
+                                    <path d="M928 687.9c-17.8 0-32.2 14.4-32.2 32.1v80.7c0 35.3-28.7 64-64 64H192.5c-35.3 0-64-28.7-64-64V225c0-35.3 28.7-64 64-64H415l82.7 143.3c6.6 11.4 19.2 17.2 31.5 15.8h302.5c35.3 0 64 28.7 64 64v80c0 17.7 14.4 32.1 32.2 32.1s32.2-14.4 32.2-32.1c0-0.8 0-1.6-0.1-2.4v-77.5C960 329 925.1 282 876.1 264v-1c0-68.2-55.8-124-124-124H476.2l-14.8-25.7c-7.4-12.9-18-16.2-27.3-16l-0.1-0.1H192.1c-70.7 0-128 57.3-128 128v574.1c0 70.7 57.3 128 128 128h640c70.7 0 128-57.3 128-128v-76.9c0.1-0.8 0.1-1.6 0.1-2.4 0-17.7-14.4-32.1-32.2-32.1zM747.1 202.8c31.6 0 58 23.2 63.1 53.4H543.9l-30.8-53.4h234z"></path>
+                                </svg>
+                            </label>
+                            <div id="refresh-button">
+                                <svg t="1709013699284" class="icon"
+                                     viewBox="0 0 1024 1024" version="1.1"
+                                     xmlns="http://www.w3.org/2000/svg" p-id="4965" width="100%" height="100%">
+                                    <path d="M721.066667 725.333333c-59.733333 55.466667-132.266667 85.333333-209.066667 85.333334-157.866667 0-290.133333-123.733333-298.666667-281.6l12.8 12.8c8.533333 8.533333 17.066667 12.8 29.866667 12.8s21.333333-4.266667 29.866667-12.8c17.066667-17.066667 17.066667-42.666667 0-59.733334l-85.333334-85.333333c-17.066667-17.066667-42.666667-17.066667-59.733333 0l-85.333333 85.333333c-17.066667 17.066667-17.066667 42.666667 0 59.733334s42.666667 17.066667 59.733333 0l12.8-12.8c8.533333 204.8 179.2 366.933333 384 366.933333 98.133333 0 192-38.4 268.8-110.933333 17.066667-17.066667 17.066667-42.666667 0-59.733334-12.8-17.066667-42.666667-17.066667-59.733333 0zM968.533333 482.133333c-17.066667-17.066667-42.666667-17.066667-59.733333 0l-12.8 12.8C887.466667 290.133333 716.8 128 512 128c-98.133333 0-192 38.4-268.8 110.933333-17.066667 17.066667-17.066667 42.666667 0 59.733334 17.066667 17.066667 42.666667 17.066667 59.733333 0 59.733333-55.466667 132.266667-85.333333 209.066667-85.333334 157.866667 0 290.133333 123.733333 298.666667 281.6l-12.8-12.8c-17.066667-17.066667-42.666667-17.066667-59.733334 0s-17.066667 42.666667 0 59.733334l85.333334 85.333333c8.533333 8.533333 21.333333 12.8 29.866666 12.8s21.333333-4.266667 29.866667-12.8l85.333333-85.333333c17.066667-17.066667 17.066667-42.666667 0-59.733334z"></path>
+                                </svg>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="control-and-table">
+                    <div class="control-container">
+<!--                        进度条-->
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-text-container">
+                                <span id="progress-bar-label">正在。。。</span>
+                                <span id="progress-bar-percent" style="font-weight: 100;">10/20</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-background">
+                                    <div id="scrape-progress-bar" class="progress-bar-top"></div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <!--                    控制按钮-->
-                    <div class="control-button-container">
-                        <div></div>
-                        <div id="run-button" class="button">刮削</div>
+                        <!--                    控制按钮-->
+                        <div class="control-button-container">
+                            <div></div>
+                            <div id="run-button" class="button">刮削</div>
+                        </div>
+                    </div>
+<!--                    表格区域-->
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th style="width: 5%"></th>
+                                <th style="width: 35%">文件名</th>
+                                <th style="width: 15%">大小 GB</th>
+                                <th style="width: 20%">番号</th>
+                                <th style="width: 15%">状态</th>
+                            </tr>
+                            </thead>
+                            <tbody id="files-table">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -206,7 +236,7 @@
         <span id="dialogBox-container-text"> </span>
         <div style="display: flex;flex-direction: row-reverse;">
             <div class="button" style="margin-left: 10px" onclick="dialogBox.hidden()">确定</div>
-<!--            <div class="button" style="margin-left: 10px">取消</div>-->
+            <!--            <div class="button" style="margin-left: 10px">取消</div>-->
         </div>
     </div>
 

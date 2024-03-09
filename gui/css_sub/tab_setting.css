@@ -1,0 +1,19 @@
+/*设置界面*/
+.setting-box {
+    margin: 40px;
+
+    & .setting-box-sub {
+        margin-top: 10px;
+        padding: 10px 20px 10px 20px;
+        border-radius: 5px;
+        background-color: var(--color-background-alter2);
+    }
+}
+
+.setting-item {
+    padding: 10px 0 10px 0;
+    height: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

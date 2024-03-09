@@ -15,5 +15,6 @@ def evaluate_js(window):
 if __name__ == '__main__':
     debug.logging.debug('加载GUI界面...')
 
-    window = webview.create_window('日语学习刮削器', 'gui/window.html', js_api=api)
+    window = webview.create_window('日语学习刮削器', 'gui/window.html', js_api=api
+                                   , width=1024, height=650, min_size=(650, 450))
     webview.start(evaluate_js, window, debug=True)

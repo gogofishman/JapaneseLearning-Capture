@@ -221,7 +221,8 @@ class Api(Config):
 
         return 0
 
-    def test_translate(self, text):
+    @staticmethod
+    def test_translate(text):
         return scraper.translator.translate(text)
 
 

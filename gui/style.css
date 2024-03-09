@@ -1,15 +1,22 @@
 * {
-    --color-background-main: #1e1e1e;
-    --color-background-main-light: #323232;
-    --color-background-main-light1: rgb(40, 40, 40);
-    --color-background-main-light2: #3c3c3c;
-    --color-background-main-light3: #5a5a5a;
+    --color-tip: #8630fe;
+    --color-tip-light: #9e5afd;
+    --color-tip-strong: #561fa2;
 
-    --color-icon-main: #E58EB5;
-    --color-icon-main-light: #f3d3e1;
+    --color-background: #ffffff;
+    --color-background-alter1: rgb(245, 245, 245);
+    --color-background-alter2: rgb(237, 237, 237);
+    --color-background-alter3: rgb(200, 200, 200);
+    --color-background-alter4: rgb(175, 175, 175);
 
-    --color-text-main: #dcdcdc;
+    --color-icon: rgb(95, 95, 95);
+    --color-icon-strong: var(--color-tip);
+
+    --color-text: rgb(25, 25, 25);
     --color-text-black: #282828;
+    --color-text-white: #ffffff;
+
+    --border-width: 1.5px;
 }
 
 .state-none {
@@ -22,22 +29,20 @@
 
 body, html {
     height: 100%;
-    min-width: 650px;
-    min-height: 450px;
 }
 
 body {
-    background-color: var(--color-background-main);
+    background-color: var(--color-background);
     overflow-wrap: break-word;
     user-select: none;
-    color: var(--color-text-main);
+    color: var(--color-text);
 }
 
 .container {
     display: flex;
     height: 100%;
     overflow: hidden;
-    fill: var(--color-icon-main);
+    fill: var(--color-icon);
 }
 
 .tab-container {
@@ -54,176 +59,41 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
 
         & .tab-icon {
             width: 50%;
             height: 50%;
+            z-index: 2;
         }
 
         &.selected {
-            fill: var(--color-icon-main-light);
+            fill: var(--color-icon-strong);
+
+            & .tab-icon-selected {
+                border-radius: 8px;
+                z-index: 1;
+                width: 75%;
+                height: 75%;
+                position: absolute;
+                background-color: var(--color-background-alter2);
+            }
         }
     }
 }
 
 .main-container {
     flex: 1;
-    background-color: var(--color-background-main-light1);
+    background-color: var(--color-background-alter1);
 
     & .main-container-tabView {
         height: 100%;
     }
 }
 
-/*刮削界面*/
-.main-scrape-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    box-sizing: border-box;
-    padding: 40px 40px 20px 40px;
-}
-
-.table-container {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: var(--color-background-main-light2);
-    overflow-y: auto;
-}
-
-/*表格*/
-table {
-    border-collapse: collapse;
-    width: 100%;
-    user-select: text;
-
-    & thead {
-        text-align: center;
-        font-size: 14px;
-    }
-
-    & tbody {
-        text-align: left;
-        font-size: 14px;
-    }
-
-    & input {
-        margin: 0;
-        box-sizing: border-box;
-        background-color: var(--color-background-main-light2);
-        width: 100%;
-        text-align: left;
-        border-radius: 0;
-        border: none;
-
-        &:focus {
-            border: none;
-            outline: none;
-        }
-    }
-
-    & .table-checkbox {
-        height: 12px;
-        transform: translateY(2px);
-
-        & .table-checkbox-icon {
-            fill: var(--color-text-main);
-
-            &.checkbox-selected {
-                fill: var(--color-icon-main);
-            }
-        }
-
-        &:hover .table-checkbox-icon {
-            fill: var(--color-icon-main-light);
-        }
-    }
-}
-
-th, td {
-    border: 1px solid var(--color-background-main-light3); /* 单元格边框 */
-    padding: 8px; /* 单元格内边距 */
-    height: 16px;
-}
-
-/*控制台*/
-.control-container {
-    padding-top: 20px;
-    height: 100px;
-
-    & .input-path-container {
-        width: 100%;
-        height: 2em;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        & label {
-            width: 70px;
-        }
-
-        & #refresh-button {
-            margin-left: 4px;
-            box-sizing: border-box;
-            height: 100%;
-            padding: 5px;
-            transition: all 0.1s;
-
-            &:active {
-                fill: var(--color-icon-main-light);
-            }
-        }
-    }
-
-    & #input-path {
-        border-radius: 5px;
-        width: 100%;
-        height: 100%;
-        padding: 0 10px 0 10px;
-        background-color: var(--color-background-main-light2);
-        text-align: left;
-        border: none;
-
-        &:focus {
-            border: none;
-            outline: none;
-        }
-    }
-
-    & .control-button-container {
-        width: 100%;
-        height: 2em;
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-
-    }
-}
-
-/*设置界面*/
-.setting-box {
-    margin: 40px;
-
-    & .setting-box-sub {
-        margin-top: 10px;
-        padding: 10px 20px 10px 20px;
-        border-radius: 5px;
-        background-color: var(--color-background-main-light2);
-    }
-}
-
-.setting-item {
-    padding: 10px 0 10px 0;
-    height: 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 /*控件*/
 .switch {
-    background-color: var(--color-background-main-light1);
+    background-color: var(--color-background-alter1);
     border-radius: 14px;
     box-sizing: border-box;
     display: inline-flex;
@@ -251,16 +121,16 @@ th, td {
         transition-delay: 0s;
         transition-property: all;
         z-index: 2;
-        background-color: var(--color-icon-main);
+        background-color: var(--color-icon);
     }
 
     &.switch-on {
-        background-color: var(--color-icon-main);
+        background-color: var(--color-icon);
     }
 
     &.switch-on .switch-handle {
         transform: translateX(17px);
-        background: var(--color-background-main-light2);
+        background: var(--color-background-alter2);
     }
 }
 
@@ -268,13 +138,13 @@ th, td {
     cursor: pointer;
     height: 22px;
     border-radius: 5px;
-    background-color: var(--color-background-main-light1);
-    color: var(--color-text-main);
-    border: 1px solid var(--color-background-main-light1);
+    background-color: var(--color-background-alter1);
+    color: var(--color-text);
+    border: 1px solid var(--color-background-alter1);
 
     & option {
         border-radius: 0;
-        background-color: var(--color-background-main-light1);
+        background-color: var(--color-background-alter1);
         border: 0
     }
 }
@@ -285,15 +155,20 @@ th, td {
     height: 30px;
     line-height: 30px;
     width: 70px;
-    background-color: var(--color-icon-main);
-    border-radius: 5px;
+    background-color: var(--color-tip);
+    border-radius: 50px;
     text-align: center;
     font-size: 13px;
-    color: var(--color-text-black);
+    color: var(--color-text-white);
     transition: all 0.1s;
 
+    &:hover {
+        background-color: var(--color-tip-light);
+    }
+
+
     &:active {
-        background-color: var(--color-icon-main-light);
+        background-color: var(--color-tip-strong);
     }
 }
 
@@ -301,16 +176,16 @@ th, td {
 input {
     width: 60px;
     height: 16px;
-    background-color: var(--color-background-main-light1);
-    color: var(--color-text-main);
-    border: 2px solid var(--color-background-main-light1);
+    background-color: var(--color-background-alter1);
+    color: var(--color-text);
+    border: 2px solid var(--color-background-alter1);
     border-radius: 5px;
     box-sizing: content-box;
     text-align: right;
     padding: 0 5px 0 5px;
 
     &:focus {
-        border: 2px solid var(--color-icon-main);
+        border: var(--border-width) solid var(--color-icon-strong);
         outline: none;
     }
 
@@ -326,11 +201,11 @@ input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
 }
 
-a{
-    color: var(--color-icon-main);
+a {
+    color: var(--color-icon);
 
-    &:active{
-        color: var(--color-icon-main-light);
+    &:active {
+        color: var(--color-icon-strong);
     }
 }
 
@@ -352,5 +227,5 @@ a{
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--color-background-main-light3);
+    background-color: var(--color-background-alter4);
 }

@@ -112,8 +112,13 @@ function init () {
     }
 
     //刷新表格
+    let currentRotation = 0
     let refreshButton = document.getElementById('refresh-button')
     refreshButton.onclick = () => {
+        //旋转动画
+        currentRotation += 180
+        refreshButton.style.transform = `rotate(${currentRotation}deg)`
+
         file_list.clear()
 
         //获取文件字典
@@ -139,10 +144,10 @@ function init () {
 
         //设置获取api指向的url
         let url_div = document.getElementById('translatr-api-url')
-        if (engine === 'tencent'){
+        if (engine === 'tencent') {
             url_div.href = 'https://cloud.tencent.com/product/tmt'
         }
-        if (engine === 'baidu'){
+        if (engine === 'baidu') {
             url_div.href = 'https://api.fanyi.baidu.com/product/11'
         }
 
@@ -197,27 +202,26 @@ function init () {
 
     //开始刮削
     let runButton = document.getElementById('run-button')
-    runButton.onclick = () => {
+    runButton.onclick = async () => {
         for (const _file in file_list) {
             let file = file_list[_file]
 
             if (file.ignore) continue
 
-            pywebview.api.scraper_run(file.jav_number).then((data) => {
-                let state_text = ''
-                switch (data) {
-                    case 0:
-                        state_text = '成功'
-                        break
-                    case -1:
-                        state_text = '失败'
-                        break
-                    case 1:
-                        state_text = '有误'
-                        break
-                }
-                file_list.change_state(_file, state_text)
-            })
+            let data = await pywebview.api.scraper_run(file.jav_number)
+            let state_text = ''
+            switch (data) {
+                case 0:
+                    state_text = '成功'
+                    break
+                case -1:
+                    state_text = '失败'
+                    break
+                case 1:
+                    state_text = '缺失'
+                    break
+            }
+            file_list.change_state(_file, state_text)
         }
     }
 }
