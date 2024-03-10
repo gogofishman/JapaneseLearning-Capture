@@ -119,12 +119,12 @@ function init () {
         currentRotation += 180
         refreshButton.style.transform = `rotate(${currentRotation}deg)`
 
-        file_list.clear()
+        file_table.clear()
 
         //获取文件字典
         pywebview.api.search_file().then((data) => {
             for (const file_name in data) {
-                file_list.add(file_name, data[file_name])
+                file_table.add(file_name, data[file_name])
             }
         })
     }
@@ -203,8 +203,8 @@ function init () {
     //开始刮削
     let runButton = document.getElementById('run-button')
     runButton.onclick = async () => {
-        for (const _file in file_list) {
-            let file = file_list[_file]
+        for (const _file in file_table) {
+            let file = file_table[_file]
 
             if (file.ignore) continue
 
@@ -221,7 +221,7 @@ function init () {
                     state_text = '缺失'
                     break
             }
-            file_list.change_state(_file, state_text)
+            file_table.change_state(_file, state_text)
         }
     }
 }

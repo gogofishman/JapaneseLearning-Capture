@@ -13,10 +13,13 @@
     --color-icon-strong: var(--color-tip);
 
     --color-text: rgb(25, 25, 25);
+    --color-text-gray: var(--color-icon);
     --color-text-black: #282828;
     --color-text-white: #ffffff;
 
-    --border-width: 1.5px;
+    --size-border: 1.5px;
+    --size-text-main: 14px;
+    --size-text-small: 13px;
 }
 
 .state-none {
@@ -25,6 +28,10 @@
 
 .state-hidden {
     visibility: hidden !important;
+}
+
+.state-selectable-text{
+    user-select: text;
 }
 
 body, html {
@@ -158,7 +165,7 @@ body {
     background-color: var(--color-tip);
     border-radius: 50px;
     text-align: center;
-    font-size: 13px;
+    font-size: var(--size-text-small);
     color: var(--color-text-white);
     transition: all 0.1s;
 
@@ -185,7 +192,7 @@ input {
     padding: 0 5px 0 5px;
 
     &:focus {
-        border: var(--border-width) solid var(--color-icon-strong);
+        border: var(--size-border) solid var(--color-icon-strong);
         outline: none;
     }
 

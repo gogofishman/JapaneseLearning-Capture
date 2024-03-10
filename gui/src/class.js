@@ -1,85 +1,143 @@
-let table = document.getElementById('files-table')
+let table = document.getElementById('file-table-body')
 
-class FileList {
+class FileTable {
+
+    constructor () {
+        this.file_list = {}
+        this.scraper_global = 'JavDB'
+        this.item_list = {
+            'selected': {
+                'text-align': 'center',
+                'width': '20px',
+            },
+            '刮削器': {
+                'text-align': 'center',
+                'width': '70px',
+            },
+            '番号': {
+                'text-align': 'center',
+                'width': '0.4',
+            },
+            '文件名': {
+                'text-align': 'left',
+                'width': '1',
+            },
+            '大小': {
+                'text-align': 'left',
+                'width': '60px',
+            },
+            '状态': {
+                'text-align': 'left',
+                'width': '60px',
+            },
+        }
+
+        //表格初始化
+        let table_head = document.getElementById('file-table-head')
+        for (const item in this.item_list) {
+            let div_item = document.createElement('div')
+            div_item.classList.add('table-item')
+            div_item.setAttribute('item', item)
+            div_item.innerHTML = `<span>${item}</span>`
+
+            table_head.appendChild(div_item)
+        }
+        this.update_table_style()
+
+        //修改表格item显示内容
+        for (const itemElement of table_head.children) {
+            //selected
+            if (itemElement.getAttribute('item') === 'selected') {
+                itemElement.title = '全选'
+                itemElement.innerHTML = `<input id="file-table-selectAll" type="checkbox" style="transform: translateY(5px)">`
+                itemElement.children[0].onchange = () => {
+                    document.getElementById('file-table-body')
+                        .querySelectorAll('input[type="checkbox"]')
+                        .forEach((checkbox) => {checkbox.click()})
+                }
+            }
+        }
+    }
 
     add (file_name, file_dict) {
-        this[file_name] = {
+        //检查file_name是否唯一
+        // if (this.file_list[file_name] !== undefined) return
+
+        this.file_list[file_name] = {
+            'scraper': this.scraper_global,
             'path': file_dict.path,
             'size': file_dict.size,
             'jav_number': file_dict.jav_number,
             'uncensored': file_dict.uncensored,
             'subtitle': file_dict.subtitle,
             'long_jav_number': file_dict.long_jav_number,
-            'ignore': false,
+            'selected': false,
             'state': '等待',
         }
 
-        //修改表格
-        let row = document.createElement('tr')
-        row.setAttribute('file-name', file_name)
+        //在表格中新增一行
+        let div_line = document.createElement('div')
+        div_line.classList.add('table-line')
+        div_line.setAttribute('file', file_name)
 
-        //番号可自行修改
-        let jav_number_input = document.createElement('input')
-        jav_number_input.setAttribute('type', 'text')
-        jav_number_input.setAttribute('value', file_dict.jav_number ? file_dict.jav_number : '-')
-        jav_number_input.setAttribute('file_name', file_name)
-        jav_number_input.title = '解析后得到的番号，点击可自行修改'
-        table.onchange = (event)=> {
-            //修改番号同步到数据
-            let file_name = event.target.getAttribute('file_name')
-            this.change_jav_number(file_name, event.target.value)
-        }
+        //添加item
+        div_line.innerHTML = `  <div class="table-item" item="selected"><input type="checkbox" onchange="file_table.change_file_selected('${file_name}',this.checked)"></div>
+                                <div class="table-item" item="刮削器"><span>${this.file_list[file_name]['scraper']}</span></div>
+                                <div class="table-item state-selectable-text" item="番号"><span>${this.file_list[file_name]['jav_number']}</span></div>
+                                <div class="table-item state-selectable-text" item="文件名"><span>${file_name}</span></div>
+                                <div class="table-item" item="大小"><span>${this.file_list[file_name]['size']} GB</span></div>
+                                <div class="table-item" item="状态"><span>${this.file_list[file_name]['state']}</span></div>  `
 
-        //勾选框
-        let checkbox = document.createElement('div')
-        checkbox.classList.add('table-checkbox')
-        checkbox.setAttribute('file_name', file_name)
-        checkbox.innerHTML = `<svg class="table-checkbox-icon checkbox-selected" file_name="${file_name}" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"
-                             width="100%" height="100%">
-                            <path file_name="${file_name}" class="table-checkbox-icon-sub1"
-                                  d="M725.725 527.476c0 122.054-98.994 221.050-221.050 221.050-122.054 0-220.941-98.994-220.941-221.050 0-122.054 98.887-221.050 220.941-221.050 122.054 0 221.050 98.994 221.050 221.050z"></path>
-                            <path file_name="${file_name}" class="table-checkbox-icon-sub2" d="M504.721 121.757c-223.731 0-405.74 182.009-405.74 405.74s182.009 405.74 405.74 405.74c223.731 0 405.74-182.009 405.74-405.74 0-223.731-182.009-405.74-405.74-405.74M504.721 993.296c-98.243 0-189.516-30.567-264.807-82.8-85.909-59.525-150.903-147.259-181.579-249.793-12.656-42.257-19.412-86.981-19.412-133.206 0-78.403 19.412-152.3 53.733-217.187 34.428-64.887 83.658-120.767 143.184-163.025 75.935-53.948 168.816-85.589 268.884-85.589 83.013 0 161.095 21.772 228.665 60.062 85.482 48.37 154.337 123.019 195.309 212.897 26.919 58.775 41.828 124.094 41.828 192.839 0 91.595-26.599 177.183-72.503 249.363-42.686 67.141-102.107 122.591-172.247 160.558-65.853 35.609-141.145 55.879-221.050 55.879z"></path>
-                        </svg>`
-        table.onclick = (event) => {
-            //判断点击的是checkbox按钮
-            let classlist = event.target.classList
-            if (!classlist.contains('table-checkbox-icon') &&
-                !classlist.contains('table-checkbox-icon-sub1') &&
-                !classlist.contains('table-checkbox-icon-sub2') &&
-                !classlist.contains('table-checkbox')) return
+        table.appendChild(div_line)
 
-            let file_name = event.target.getAttribute('file_name')
-            let svg = document.querySelector(`svg[file_name="${file_name}"][class~="table-checkbox-icon"]`)
-            let sub = document.querySelector(`path[file_name="${file_name}"][class~="table-checkbox-icon-sub1"]`)
+        this.update_table_style()
+    }
 
-            let value = this.toggle_jav_ignore(file_name) //获取改变后的状态
+    /**
+     * 更新表格的style
+     * @private
+     */
+    update_table_style () {
+        let lines = [document.getElementById('file-table-head'), ...document.getElementById('file-table-body').children]
+        lines.forEach((line) => {
+            for (const item of line.children) {
+                //对齐方式
+                switch (this.item_list[item.getAttribute('item')]['text-align']) {
+                    case 'center':
+                        item.style.justifyContent = 'center'
+                        break
+                    case 'left':
+                        item.style.justifyContent = 'flex-start'
+                        break
+                    case 'right':
+                        item.style.justifyContent = 'flex-end'
+                        break
+                    default:
+                        item.style.justifyContent = 'flex-start'
+                        break
+                }
 
-            if (!value) {
-                //选中状态
-                svg.classList.add('checkbox-selected')
-                sub.classList.remove('state-hidden')
-            } else {
-                svg.classList.remove('checkbox-selected')
-                sub.classList.add('state-hidden')
+                //宽度
+                if (this.item_list[item.getAttribute('item')]['width'].includes('px')) {
+                    item.style.width = this.item_list[item.getAttribute('item')]['width']
+                } else {
+                    item.style.flex = this.item_list[item.getAttribute('item')]['width']
+                }
             }
-        }
+        })
 
-        row.innerHTML = `
-            <td>${checkbox.outerHTML}</td>
-            <td>${file_name}</td>
-            <td>${Number(file_dict.size).toFixed(1)}</td>
-            <td>${jav_number_input.outerHTML}</td>
-            <td td-type="state">${this[file_name].state}</td>
-        `
-        table.appendChild(row)
+        //滚动条出现则head添加10px右padding
+        if (table.scrollHeight > table.clientHeight) {
+            table.style.paddingRight = '10px'
+        }
     }
 
     change_jav_number (file_name, jav_number) {
-        this[file_name].jav_number = jav_number
+        this.file_list[file_name].jav_number = jav_number
     }
 
     change_state (file_name, state) {
-        this[file_name].state = state
+        this.file_list[file_name].state = state
 
         //修改表格
         let row = document.querySelector(`tr[file-name="${file_name}"]`)
@@ -87,13 +145,13 @@ class FileList {
         td.innerHTML = state
     }
 
-    toggle_jav_ignore (file_name) {
-        this[file_name].ignore = !this[file_name].ignore
-        return this[file_name].ignore
+    change_file_selected (file_name, value) {
+        this.file_list[file_name]['selected'] = value
+        return this.file_list[file_name].selected
     }
 
     remove (file_name) {
-        delete this[file_name]
+        delete this.file_list[file_name]
 
         //修改表格
         let row = document.querySelector(`tr[file-name="${file_name}"]`)
@@ -107,4 +165,183 @@ class FileList {
     }
 }
 
-var file_list = new FileList()
+var file_table = new FileTable()
+
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+file_table.add('hhd800.com@GVH-624.mp4', {
+    'path': 'hhd800.com@GVH-624.mp4',
+    'size': '6.2',
+    'jav_number': 'GVH-624',
+    'uncensored': false,
+    'subtitle': false,
+    'long_jav_number': 'GVH-624'
+})
+
+
