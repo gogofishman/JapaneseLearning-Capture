@@ -38,6 +38,10 @@ class Api(Config):
             Api.module_list[file[:-3]] = module
             logging.debug(f'加载刮削器 "{file[:-3]}" 成功!')
 
+    def get_all_scraper(self) -> list[str]:
+        """获取所有刮削器"""
+        return list(self.module_list.keys())
+
     def search_file(self) -> dict:
         """查找文件"""
 

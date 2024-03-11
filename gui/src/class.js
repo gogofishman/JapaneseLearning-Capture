@@ -3,20 +3,16 @@ let table = document.getElementById('file-table-body')
 class FileTable {
 
     constructor () {
+        this.scrape = ''
         this.file_list = {}
-        this.scraper_global = 'JavDB'
         this.item_list = {
             'selected': {
                 'text-align': 'center',
                 'width': '20px',
             },
-            '刮削器': {
-                'text-align': 'center',
-                'width': '70px',
-            },
             '番号': {
                 'text-align': 'center',
-                'width': '0.4',
+                'width': '0.3',
             },
             '文件名': {
                 'text-align': 'left',
@@ -28,7 +24,7 @@ class FileTable {
             },
             '状态': {
                 'text-align': 'left',
-                'width': '60px',
+                'width': '120px',
             },
         }
 
@@ -61,10 +57,9 @@ class FileTable {
 
     add (file_name, file_dict) {
         //检查file_name是否唯一
-        // if (this.file_list[file_name] !== undefined) return
+        if (this.file_list[file_name] !== undefined) return
 
         this.file_list[file_name] = {
-            'scraper': this.scraper_global,
             'path': file_dict.path,
             'size': file_dict.size,
             'jav_number': file_dict.jav_number,
@@ -82,8 +77,9 @@ class FileTable {
 
         //添加item
         div_line.innerHTML = `  <div class="table-item" item="selected"><input type="checkbox" onchange="file_table.change_file_selected('${file_name}',this.checked)"></div>
-                                <div class="table-item" item="刮削器"><span>${this.file_list[file_name]['scraper']}</span></div>
-                                <div class="table-item state-selectable-text" item="番号"><span>${this.file_list[file_name]['jav_number']}</span></div>
+                                <div class="table-item state-selectable-text" item="番号">
+                                    <input type="text" title="如果番号解析有误，可自行修改" value="${this.file_list[file_name]['jav_number']}" onchange="file_table.change_jav_number('${file_name}',this.value)">
+                                </div>
                                 <div class="table-item state-selectable-text" item="文件名"><span>${file_name}</span></div>
                                 <div class="table-item" item="大小"><span>${this.file_list[file_name]['size']} GB</span></div>
                                 <div class="table-item" item="状态"><span>${this.file_list[file_name]['state']}</span></div>  `
@@ -165,7 +161,65 @@ class FileTable {
     }
 }
 
+class ProgressBar {
+    constructor () {
+        this._num = 0
+        this._total = 0
+        this._div_label = document.getElementById('progress-bar-label')
+        this._div_percent_text = document.getElementById('progress-bar-percent')
+        this._div_progress_bar = document.getElementById('scrape-progress-bar')
+    }
+
+    /**
+     * 初始化
+     * @param label{string} 标签
+     * @param total{number} 进度总数
+     */
+    init (label, total) {
+        this._num = 0
+        this._total = total
+        this.change_label(label)
+        this.change_percent(`${this._num}/${this._total}`)
+        this.change_bar(this._num, this._total)
+    }
+
+    /**
+     * 更新进度
+     * @param label{string|null} 改变标签，如果null则不改变
+     * @param step{number} 进度前进的步数，默认为1
+     */
+    update (label = null, step = 1) {
+        this._num = this._num + step
+        this._num = this._total < this._num ? this._total : this._num
+        if (label) this.change_label(label)
+        this.change_percent(`${this._num}/${this._total}`)
+        this.change_bar(this._num, this._total)
+    }
+
+    /**
+     * @private
+     */
+    change_label (text) {
+        this._div_label.innerText = text
+    }
+
+    /**
+     * @private
+     */
+    change_percent (text) {
+        this._div_percent_text.innerText = text
+    }
+
+    /**
+     * @private
+     */
+    change_bar (num, total) {
+        this._div_progress_bar.style.width = `${(num / total) * 100}%`
+    }
+}
+
 var file_table = new FileTable()
+var progress_bar = new ProgressBar()
 
 file_table.add('hhd800.com@GVH-624.mp4', {
     'path': 'hhd800.com@GVH-624.mp4',
@@ -175,173 +229,4 @@ file_table.add('hhd800.com@GVH-624.mp4', {
     'subtitle': false,
     'long_jav_number': 'GVH-624'
 })
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
-
 

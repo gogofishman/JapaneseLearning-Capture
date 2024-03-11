@@ -7,20 +7,6 @@
     background-color: var(--color-background);
 }
 
-/*顶部条*/
-.top-container {
-    width: 100%;
-    height: 60px;
-    border-bottom: var(--size-border) solid var(--color-background-alter2);
-
-    & .input-path-container {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-}
-
 /*路径输入编辑框*/
 .input-path-container-line {
     width: 65%;
@@ -82,7 +68,25 @@
         height: 2em;
         padding: 0 60px 0 10px;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
+    }
+
+    & select {
+        padding-top: 2px;
+        background-color: var(--color-tip);
+        color: var(--color-text-white);
+        font-size: var(--size-text-small);
+        text-align: center;
+        width: 80px;
+        line-height: 30px;
+        height: 30px;
+        margin-right: 15px;
+        border-radius: 50px;
+        cursor: pointer;
+
+        &:focus-visible {
+            outline: none;
+        }
     }
 }
 
@@ -95,17 +99,19 @@
     padding: 0 10px 0 10px;
 
     & .progress-bar-text-container {
+        box-sizing: border-box;
+        padding: 0 5px 0 5px;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
         font-size: var(--size-text-small);
-        color: var(--color-text-gray);
+        color: var(--color-text-gray2);
     }
 
     & .progress-bar {
         width: 100%;
-        margin-top: 10px;
+        margin-top: 7px;
 
         & .progress-bar-background {
             width: 100%;
@@ -115,7 +121,7 @@
         }
 
         & .progress-bar-top {
-            width: 30%;
+            width: 0%;
             height: 100%;
             background-color: var(--color-icon-strong);
             border-radius: 5px;
@@ -151,6 +157,18 @@
         padding: 0 20px 0 20px;
         overflow-y: auto;
         font-size: var(--size-text-small);
+
+        & input[type="text"] {
+            width: 100%;
+            text-align: center;
+            background-color: transparent;
+            border: var(--size-border) solid var(--color-background);
+
+            &:focus {
+                border: var(--size-border) solid var(--color-icon-strong);
+                outline: none;
+            }
+        }
     }
 }
 

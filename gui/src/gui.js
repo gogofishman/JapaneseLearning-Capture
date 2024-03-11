@@ -129,6 +129,20 @@ function init () {
         })
     }
 
+    //刮削器选择combobox
+    let scrape_select = document.getElementById('scrape-select')
+    pywebview.api.get_all_scraper().then((scrape_list) => {
+        for (const scrape of scrape_list) {
+            let option = document.createElement('option')
+            option.value = scrape
+            option.innerHTML = scrape
+            scrape_select.appendChild(option)
+        }
+    })
+    scrape_select.onchange = () => {
+        file_table.scrape = scrape_select.value
+    }
+
     //翻译配置按钮
     let trans_api_button = document.getElementById('trans-api-button')
     trans_api_button.onclick = () => {

@@ -14,6 +14,7 @@
 
     --color-text: rgb(25, 25, 25);
     --color-text-gray: var(--color-icon);
+    --color-text-gray2: rgb(135,135,135);
     --color-text-black: #282828;
     --color-text-white: #ffffff;
 
@@ -30,7 +31,7 @@
     visibility: hidden !important;
 }
 
-.state-selectable-text{
+.state-selectable-text {
     user-select: text;
 }
 
@@ -91,16 +92,38 @@ body {
 
 .main-container {
     flex: 1;
-    background-color: var(--color-background-alter1);
 
     & .main-container-tabView {
         height: 100%;
     }
 }
 
+/*顶部条*/
+.top-container {
+    width: 100%;
+    height: 60px;
+    box-sizing: border-box;
+    border-bottom: var(--size-border) solid var(--color-background-alter2);
+
+    & .input-path-container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & h1 {
+        box-sizing: border-box;
+        padding-top: 30px;
+        padding-left: 30px;
+        height: 100%;
+        font-weight: 700;
+    }
+}
+
 /*控件*/
 .switch {
-    background-color: var(--color-background-alter1);
+    background-color: var(--color-background-alter3);
     border-radius: 14px;
     box-sizing: border-box;
     display: inline-flex;
@@ -132,7 +155,7 @@ body {
     }
 
     &.switch-on {
-        background-color: var(--color-icon);
+        background-color: var(--color-icon-strong);
     }
 
     &.switch-on .switch-handle {
@@ -154,6 +177,10 @@ body {
         background-color: var(--color-background-alter1);
         border: 0
     }
+
+    &:focus-visible {
+        outline: none;
+    }
 }
 
 /*按钮*/
@@ -161,7 +188,7 @@ body {
     cursor: pointer;
     height: 30px;
     line-height: 30px;
-    width: 70px;
+    width: 80px;
     background-color: var(--color-tip);
     border-radius: 50px;
     text-align: center;
@@ -181,6 +208,7 @@ body {
 
 /*输入框*/
 input {
+    cursor: text;
     width: 60px;
     height: 16px;
     background-color: var(--color-background-alter1);
@@ -209,7 +237,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 a {
-    color: var(--color-icon);
+    color: var(--color-icon-strong);
 
     &:active {
         color: var(--color-icon-strong);
