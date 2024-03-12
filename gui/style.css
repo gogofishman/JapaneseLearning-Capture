@@ -256,7 +256,6 @@ body {
 
 /*输入框*/
 input {
-    cursor: text;
     width: 60px;
     height: 16px;
     background-color: var(--color-background-alter1);
@@ -275,6 +274,11 @@ input {
     &.long-input {
         width: 300px;
     }
+}
+
+input[type="text"],
+input[type="number"] {
+    cursor: text;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
