@@ -49,7 +49,11 @@ class FileTable {
                 itemElement.children[0].onchange = () => {
                     document.getElementById('file-table-body')
                         .querySelectorAll('input[type="checkbox"]')
-                        .forEach((checkbox) => {checkbox.click()})
+                        .forEach((checkbox) => {
+                            if (itemElement.children[0].checked !== checkbox.checked) {
+                                checkbox.click()
+                            }
+                        })
                 }
             }
         }
@@ -87,6 +91,9 @@ class FileTable {
         table.appendChild(div_line)
 
         this.update_table_style()
+
+        //默认选中
+        div_line.children[0].children[0].click()
     }
 
     /**
