@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="tab-container">
+    <div class="tab-container pywebview-drag-region">
         <div class="tab-icon-container" connect="main-scrape">
             <div class="tab-icon-selected"></div>
             <div class="tab-icon">
@@ -37,7 +37,7 @@
         <!--        刮削-->
         <div id="main-scrape" class="main-container-tabView">
             <div class="main-scrape-container">
-                <div class="top-container">
+                <div class="top-container pywebview-drag-region">
                     <!-- 输入路径-->
                     <div class="input-path-container">
                         <div class="input-path-container-line">
@@ -75,7 +75,7 @@
 
                     <!--                    控制按钮-->
                     <div class="control-button-container">
-                        <select id="scrape-select"></select>
+                        <select id="scrape-select" title="选择刮削器"></select>
                         <div id="run-button" class="button">刮削</div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
         <!--        设置-->
         <div id="main-setting" class="main-container-tabView">
             <div class="setting-container">
-                <div class="top-container"><h1>设置</h1></div>
+                <div class="top-container pywebview-drag-region"><h1>设置</h1></div>
                 <div class="setting-container-body">
                     <div class="setting-box">
                         <h1>通用</h1>
@@ -211,7 +211,7 @@
             <span><a id="translatr-api-url" href="" target=_blank>申请api</a></span>
             <input id="translatr-api-response" class="long-input" type="text" readonly>
         </div>
-        <div class="setting-item"> </div>
+        <div class="setting-item"></div>
 
         <div class="setting-item">
             <div id="translatr-api-test" class="button">测试</div>
@@ -231,10 +231,28 @@
         <span id="dialogBox-container-text"> </span>
         <div style="display: flex;flex-direction: row-reverse;">
             <div class="button" style="margin-left: 10px" onclick="dialogBox.hidden()">确定</div>
-            <!--            <div class="button" style="margin-left: 10px">取消</div>-->
         </div>
     </div>
 
+</div>
+
+<div class="minimize-container">
+    <div id="minimize-button" class="minimize-container-button">
+        <svg viewBox="0 0 1024 1024" width="50%" height="50%" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42.666667 512a42.666667 42.666667 0 0 1 42.666666-42.666667h853.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333a42.666667 42.666667 0 0 1-42.666666-42.666667z"></path>
+        </svg>
+    </div>
+    <div id="maximize-button" class="minimize-container-button">
+        <svg viewBox="0 0 1024 1024" width="40%" height="40%" xmlns="http://www.w3.org/2000/svg">
+            <path d="M661.76 85.333333a42.666667 42.666667 0 0 1 42.666667-42.666666H938.666667a42.666667 42.666667 0 0 1 42.666666 42.666666v234.24a42.666667 42.666667 0 1 1-85.333333 0V188.330667l-268.501333 268.501333a42.666667 42.666667 0 0 1-60.330667-60.330667L835.669333 128H704.426667a42.666667 42.666667 0 0 1-42.666667-42.666667z m-204.928 481.834667a42.666667 42.666667 0 0 1 0 60.330667L188.330667 896H319.573333a42.666667 42.666667 0 1 1 0 85.333333H85.333333a42.666667 42.666667 0 0 1-42.666666-42.666666v-234.24a42.666667 42.666667 0 1 1 85.333333 0v131.242666l268.501333-268.501333a42.666667 42.666667 0 0 1 60.330667 0z"></path>
+        </svg>
+    </div>
+    <div id="close-button" class="minimize-container-button">
+        <svg viewBox="0 0 1024 1024" width="50%" height="50%" xmlns="http://www.w3.org/2000/svg">
+            <path d="M843.861333 843.861333a42.666667 42.666667 0 0 1-60.330666 0L180.138667 240.469333a42.666667 42.666667 0 1 1 60.330666-60.330666l603.392 603.392a42.666667 42.666667 0 0 1 0 60.330666z"></path>
+            <path d="M843.861333 180.138667a42.666667 42.666667 0 0 1 0 60.330666L240.469333 843.861333a42.666667 42.666667 0 0 1-60.330666-60.330666L783.530667 180.138667a42.666667 42.666667 0 0 1 60.330666 0z"></path>
+        </svg>
+    </div>
 </div>
 
 </body>

@@ -10,6 +10,7 @@
     --color-background-alter4: rgb(175, 175, 175);
 
     --color-icon: rgb(95, 95, 95);
+    --color-icon-light: var(--color-background-alter4);
     --color-icon-strong: var(--color-tip);
 
     --color-text: rgb(25, 25, 25);
@@ -60,6 +61,7 @@ body {
 }
 
 .tab-container {
+    padding-top: 30px;
     width: 60px;
     height: 100%;
     display: flex;
@@ -124,6 +126,45 @@ body {
         padding-left: 30px;
         height: 100%;
         font-weight: 700;
+    }
+}
+
+/*最小化关闭按钮*/
+.minimize-container {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    transition: all .3s;
+    fill: var(--color-icon-light);
+
+    &:hover {
+        fill: var(--color-icon);
+    }
+
+    & .minimize-container-button {
+        display: flex;
+        width: 30px;
+        justify-content: center;
+        align-items: center;
+        margin-right: 5px;
+        margin-left: 5px;
+        border-radius: 50px;
+
+        &:hover {
+            background-color: var(--color-background-alter2);
+        }
+    }
+
+    & #close-button {
+
+
+        &:hover {
+            background-color: rgb(253, 0, 7) !important;
+            fill: var(--color-background-alter1) !important;
+        }
     }
 }
 

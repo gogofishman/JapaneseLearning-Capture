@@ -11,6 +11,7 @@
 .input-path-container-line {
     width: 65%;
     position: relative;
+    transform: translateX(-30px);
 
     & #input-path {
         width: 100%;
