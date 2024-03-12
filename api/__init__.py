@@ -83,10 +83,10 @@ class Api(Config):
     def scraper_run(self, video_title: str, video_title_suffix: str, file_path: str, _type: str = 'JavDB') -> int:
         """
         开始刮削
-        :param video_title_suffix:
-        :param video_title:
-        :param file_path:
-        :param _type:
+        :param video_title_suffix:后缀，如-C,-U
+        :param video_title:视频标题
+        :param file_path:视频源文件完整地址
+        :param _type:刮削器名称
         :return: 0 成功 ，-1 失败 ，1 有误
         """
         queue = multiprocessing.Queue()
