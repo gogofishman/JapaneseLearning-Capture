@@ -6,7 +6,7 @@ from api import debug, window
 def evaluate_js(window_):
     """在api之后加载的js函数"""
     window_.evaluate_js(
-        r"""
+        """
         init();
         window_event_init();
         """

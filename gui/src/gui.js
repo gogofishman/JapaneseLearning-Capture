@@ -91,10 +91,6 @@ function init () {
         control.onchange = () => {
             pywebview.api[connect](control.value)
         }
-
-        control.onfocus = () => {
-            control.select()
-        }
     })
 
     //初始化输入路径
@@ -106,9 +102,6 @@ function init () {
         pywebview.api.input_path(inputPath.value).then((path) => {
             inputPath.value = path
         })
-    }
-    inputPath.onfocus = () => {
-        inputPath.select()
     }
 
     //刷新表格

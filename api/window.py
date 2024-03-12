@@ -1,7 +1,10 @@
 import os
 import ctypes
+import ctypes.wintypes
+import win32process, win32gui
 from webview.window import FixPoint
 
+window_min_size = (1280, 720)
 point = ctypes.wintypes.POINT()
 window_resize_start_point = ()
 window_resize_start_size = ()
@@ -9,9 +12,6 @@ window_resize_start_size = ()
 
 def setup_all_windows_borderless():
     """实现圆角窗口"""
-    import ctypes
-    import ctypes.wintypes
-    import win32process, win32gui
 
     def DwmSetWindowAttribute(hwnd, attr, value, size=4):
         DwmSetWindowAttribute = ctypes.windll.dwmapi.DwmSetWindowAttribute
@@ -70,32 +70,62 @@ def window_resize_update(window, direction):
     point_now = get_mouse_position()
 
     if direction == 'left':
-        window.resize(window_resize_start_size[0] + window_resize_start_point[0] - point_now[0],
-                      window.height, FixPoint.EAST)
+        width = window_resize_start_size[0] + window_resize_start_point[0] - point_now[0]
+        height = window.height
+
+        width = window_min_size[0] if width < window_min_size[0] else width
+
+        window.resize(width, height, FixPoint.EAST)
     elif direction == 'right':
-        window.resize(window_resize_start_size[0] + point_now[0] - window_resize_start_point[0],
-                      window.height, FixPoint.WEST)
+        width = window_resize_start_size[0] + point_now[0] - window_resize_start_point[0]
+        height = window.height
+
+        width = window_min_size[0] if width < window_min_size[0] else width
+
+        window.resize(width, height, FixPoint.WEST)
     elif direction == 'top':
-        window.resize(window.width,
-                      window_resize_start_size[1] + window_resize_start_point[1] - point_now[1],
-                      FixPoint.SOUTH)
+        width = window.width
+        height = window_resize_start_size[1] + window_resize_start_point[1] - point_now[1]
+
+        height = window_min_size[1] if height < window_min_size[1] else height
+
+        window.resize(width, height, FixPoint.SOUTH)
     elif direction == 'bottom':
-        window.resize(window.width,
-                      window_resize_start_size[1] + point_now[1] - window_resize_start_point[1],
-                      FixPoint.NORTH)
+        width = window.width
+        height = window_resize_start_size[1] + point_now[1] - window_resize_start_point[1]
+
+        height = window_min_size[1] if height < window_min_size[1] else height
+
+        window.resize(width, height, FixPoint.NORTH)
     elif direction == 'left-top':
-        window.resize(window_resize_start_size[0] + window_resize_start_point[0] - point_now[0],
-                      window_resize_start_size[1] + window_resize_start_point[1] - point_now[1],
-                      FixPoint.SOUTH|FixPoint.EAST)
+        width = window_resize_start_size[0] + window_resize_start_point[0] - point_now[0]
+        height = window_resize_start_size[1] + window_resize_start_point[1] - point_now[1]
+
+        width = window_min_size[0] if width < window_min_size[0] else width
+        height = window_min_size[1] if height < window_min_size[1] else height
+
+        window.resize(width, height, FixPoint.SOUTH | FixPoint.EAST)
     elif direction == 'left-bottom':
-        window.resize(window_resize_start_size[0] + window_resize_start_point[0] - point_now[0],
-                      window_resize_start_size[1] + point_now[1] - window_resize_start_point[1],
-                      FixPoint.NORTH|FixPoint.EAST)
+        width = window_resize_start_size[0] + window_resize_start_point[0] - point_now[0]
+        height = window_resize_start_size[1] + point_now[1] - window_resize_start_point[1]
+
+        width = window_min_size[0] if width < window_min_size[0] else width
+        height = window_min_size[1] if height < window_min_size[1] else height
+
+        window.resize(width, height, FixPoint.NORTH | FixPoint.EAST)
     elif direction == 'right-top':
-        window.resize(window_resize_start_size[0] + point_now[0] - window_resize_start_point[0],
-                      window_resize_start_size[1] + window_resize_start_point[1] - point_now[1],
-                      FixPoint.SOUTH|FixPoint.WEST)
+        width = window_resize_start_size[0] + point_now[0] - window_resize_start_point[0]
+        height = window_resize_start_size[1] + window_resize_start_point[1] - point_now[1]
+
+        width = window_min_size[0] if width < window_min_size[0] else width
+        height = window_min_size[1] if height < window_min_size[1] else height
+
+        window.resize(width, height, FixPoint.SOUTH | FixPoint.WEST)
     elif direction == 'right-bottom':
-        window.resize(window_resize_start_size[0] + point_now[0] - window_resize_start_point[0],
-                      window_resize_start_size[1] + point_now[1] - window_resize_start_point[1],
-                      FixPoint.NORTH|FixPoint.WEST)
+        width = window_resize_start_size[0] + point_now[0] - window_resize_start_point[0]
+        height = window_resize_start_size[1] + point_now[1] - window_resize_start_point[1]
+
+        width = window_min_size[0] if width < window_min_size[0] else width
+        height = window_min_size[1] if height < window_min_size[1] else height
+
+        window.resize(width, height, FixPoint.NORTH | FixPoint.WEST)

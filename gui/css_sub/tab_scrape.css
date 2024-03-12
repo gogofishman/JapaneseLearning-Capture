@@ -9,8 +9,10 @@
 
 /*路径输入编辑框*/
 .input-path-container-line {
-    width: 65%;
-    position: relative;
+    position: absolute;
+    top: 13px;
+    width: 600px;
+    left: calc(100vw / 2 - 300px);
     transform: translateX(-30px);
 
     & #input-path {
