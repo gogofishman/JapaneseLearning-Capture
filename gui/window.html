@@ -236,6 +236,7 @@
 
 </div>
 
+<!--开关程序按钮-->
 <div class="minimize-container">
     <div id="minimize-button" class="minimize-container-button">
         <svg viewBox="0 0 1024 1024" width="50%" height="50%" xmlns="http://www.w3.org/2000/svg">
@@ -255,8 +256,19 @@
     </div>
 </div>
 
+<!--调整窗口大小-->
+<div id="resize-bar-top" class="resize-bar"></div>
+<div id="resize-bar-bottom" class="resize-bar"></div>
+<div id="resize-bar-left" class="resize-bar"></div>
+<div id="resize-bar-right" class="resize-bar"></div>
+<div id="resize-bar-left-top" class="resize-bar"></div>
+<div id="resize-bar-right-top" class="resize-bar"></div>
+<div id="resize-bar-left-bottom" class="resize-bar"></div>
+<div id="resize-bar-right-bottom" class="resize-bar"></div>
+
 </body>
 <script src="src/dialogBox.js"></script>
 <script src="src/class.js"></script>
 <script src="src/gui.js"></script>
+<script src="src/window_event.js"></script>
 </html>

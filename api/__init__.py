@@ -1,6 +1,7 @@
 # 前后端通信api
 import os
 import importlib
+import webview
 from types import ModuleType
 
 import scraper
@@ -9,12 +10,14 @@ from .config import Config
 from .get_jav_number import get_jav_number
 from .videoClass import Video
 from .debug import logging
+from .window import setup_all_windows_borderless, window_resize_start, window_resize_update
 
 
 class Api(Config):
     video_format: tuple = ('.mp4', '.mkv', '.avi', '.rmvb', '.flv', '.mov', '.rm', '.wvm')
     module_list: dict[str, ModuleType] = {}
     """保存所有刮削器的文件模块字典"""
+    window_max: bool = False
 
     def __init__(self):
         super().__init__()
@@ -225,9 +228,31 @@ class Api(Config):
 
         return 0
 
-    @staticmethod
-    def test_translate(text):
+    def test_translate(self, text):
         return scraper.translator.translate(text)
+
+    def window_minimize(self):
+        window.minimize()
+
+    def window_maximize(self):
+        if self.window_max:
+            window.restore()
+        else:
+            window.maximize()
+
+        self.window_max = not self.window_max
+
+    def window_close(self):
+        window.destroy()
+
+    def window_resize_start(self):
+        window_resize_start(window)
+
+    def window_resize_update(self, direction):
+        window_resize_update(window, direction)
 
 
 api = Api()
+window = webview.create_window('日语学习刮削器', 'gui/window.html', js_api=api
+                               , width=1024, height=650, min_size=(650, 450), frameless=True, easy_drag=False)
+window.events.loaded += setup_all_windows_borderless

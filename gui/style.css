@@ -42,6 +42,7 @@
 }
 
 body, html {
+    overflow: hidden;
     height: 100%;
 }
 
@@ -310,4 +311,74 @@ a {
 
 ::-webkit-scrollbar-thumb {
     background-color: var(--color-background-alter4);
+}
+
+
+/*调整窗口大小*/
+.resize-bar {
+    position: absolute;
+}
+
+#resize-bar-top {
+    cursor: ns-resize;
+    width: 100vw;
+    height: 3px;
+    top: 0;
+    left: 0;
+}
+
+#resize-bar-bottom {
+    cursor: ns-resize;
+    width: 100vw;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+}
+
+#resize-bar-left {
+    cursor: ew-resize;
+    width: 3px;
+    height: 100vw;
+    top: 0;
+    left: 0;
+}
+
+#resize-bar-right {
+    cursor: ew-resize;
+    width: 3px;
+    height: 100vw;
+    top: 0;
+    right: 0;
+}
+
+#resize-bar-left-top{
+    cursor: nwse-resize;
+    width: 5px;
+    height: 5px;
+    top: 0;
+    left: 0;
+}
+
+#resize-bar-left-bottom{
+    cursor: nesw-resize;
+    width: 5px;
+    height: 5px;
+    bottom: 0;
+    left: 0;
+}
+
+#resize-bar-right-top{
+    cursor: nesw-resize;
+    width: 5px;
+    height: 5px;
+    top: 0;
+    right: 0;
+}
+
+#resize-bar-right-bottom{
+    cursor: nwse-resize;
+    width: 5px;
+    height: 5px;
+    bottom: 0;
+    right: 0;
 }

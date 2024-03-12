@@ -150,12 +150,13 @@ class FileTable {
         delete this.file_list[file_name]
 
         //修改表格
-        let row = document.querySelector(`tr[file-name="${file_name}"]`)
-        table.removeChild(row)
+        let line = document.getElementById('file-table-body')
+            .querySelector(`div[file="${file_name}"]`)
+        line.remove()
     }
 
     clear () {
-        for (const file_name in this) {
+        for (const file_name in this.file_list) {
             this.remove(file_name)
         }
     }
