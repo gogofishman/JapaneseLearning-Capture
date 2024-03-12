@@ -14,13 +14,18 @@
 
     --color-text: rgb(25, 25, 25);
     --color-text-gray: var(--color-icon);
-    --color-text-gray2: rgb(135,135,135);
+    --color-text-gray2: rgb(135, 135, 135);
     --color-text-black: #282828;
     --color-text-white: #ffffff;
 
     --size-border: 1.5px;
     --size-text-main: 14px;
     --size-text-small: 13px;
+}
+
+@font-face {
+    font-family: "user-font";
+    src: url("resources/font.ttf");
 }
 
 .state-none {
@@ -40,6 +45,7 @@ body, html {
 }
 
 body {
+    font-family: user-font, sans-serif !important;
     background-color: var(--color-background);
     overflow-wrap: break-word;
     user-select: none;
