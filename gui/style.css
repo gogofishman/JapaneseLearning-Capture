@@ -37,6 +37,14 @@
     visibility: hidden !important;
 }
 
+.state-freeze{
+    pointer-events: none;
+
+    & *{
+        color: lightgray !important;
+    }
+}
+
 .state-selectable-text {
     user-select: text;
 }

@@ -143,9 +143,10 @@ class FileTable {
         this.file_list[file_name].state = state
 
         //修改表格
-        let row = document.querySelector(`tr[file-name="${file_name}"]`)
-        let td = row.querySelector('td[td-type="state"]')
-        td.innerHTML = state
+        document.getElementById('file-table-body')
+            .querySelector('div[file="' + file_name + '"]')
+            .querySelector('div[item="状态"]')
+            .children[0].innerHTML = state
     }
 
     change_file_selected (file_name, value) {
@@ -228,13 +229,4 @@ class ProgressBar {
 
 var file_table = new FileTable()
 var progress_bar = new ProgressBar()
-
-file_table.add('hhd800.com@GVH-624.mp4', {
-    'path': 'hhd800.com@GVH-624.mp4',
-    'size': '6.2',
-    'jav_number': 'GVH-624',
-    'uncensored': false,
-    'subtitle': false,
-    'long_jav_number': 'GVH-624'
-})
 

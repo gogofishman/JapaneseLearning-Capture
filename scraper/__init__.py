@@ -152,7 +152,7 @@ class BaseScraper(ABC):
         return path
 
     @staticmethod
-    def move_file(video: Video, file_path: str, output_path: str, output_title: str) -> bool:
+    def move_file(video: Video, file_path: str, output_path: str, output_title: str, output_title_suffix: str) -> bool:
         """
         移动文件到输出目录，同时创建nfo文件，成功返回True，失败返回False
         """
@@ -163,10 +163,10 @@ class BaseScraper(ABC):
 
         try:
             # 移动文件
-            shutil.move(file_path, f'{output_path}/{output_title}{get_file_extension(file_path)}')
+            shutil.move(file_path, f'{output_path}/{output_title}{output_title_suffix}{get_file_extension(file_path)}')
 
             # 创建nfo文件
-            nfo = nfoClass.Nfo(video, f'{output_path}/{output_title}.nfo')
+            nfo = nfoClass.Nfo(video, f'{output_path}/{output_title}{output_title_suffix}.nfo')
             nfo.save()
 
             return True

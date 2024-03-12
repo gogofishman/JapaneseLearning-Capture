@@ -1,6 +1,8 @@
 # 前后端通信api
 import os
 import importlib
+import sys
+
 import webview
 from types import ModuleType
 
@@ -70,7 +72,7 @@ class Api(Config):
             jav_number = get_jav_number(file)
             video_dict[file] = {
                 "path": file_path,
-                "size": size / 1024,
+                "size": round(size / 1024, 2),
                 "jav_number": jav_number[0],
                 "uncensored": jav_number[1],
                 "subtitle": jav_number[2],
@@ -78,9 +80,10 @@ class Api(Config):
             }
         return video_dict
 
-    def scraper_run(self, video_title: str, file_path: str, _type: str = 'JavDB') -> int:
+    def scraper_run(self, video_title: str, video_title_suffix: str, file_path: str, _type: str = 'JavDB') -> int:
         """
         开始刮削
+        :param video_title_suffix:
         :param video_title:
         :param file_path:
         :param _type:
@@ -217,7 +220,7 @@ class Api(Config):
         log('已下载图片')
 
         # 移动文件，创建info文件
-        re = scraper_instance.move_file(video, file_path, output_path, video.title)
+        re = scraper_instance.move_file(video, file_path, output_path, video.title, video_title_suffix)
         if re is False:
             error('移动视频文件失败！该影片刮削结束！')
             return -1
@@ -244,6 +247,7 @@ class Api(Config):
 
     def window_close(self):
         window.destroy()
+        sys.exit()
 
     def window_resize_start(self):
         window_resize_start(window)

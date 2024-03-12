@@ -138,6 +138,7 @@ function init () {
             option.innerHTML = scrape
             scrape_select.appendChild(option)
         }
+        file_table.scrape = scrape_select.value
     })
     scrape_select.onchange = () => {
         file_table.scrape = scrape_select.value
@@ -217,12 +218,42 @@ function init () {
     //开始刮削
     let runButton = document.getElementById('run-button')
     runButton.onclick = async () => {
-        for (const _file in file_table) {
-            let file = file_table[_file]
+        //冻结部分ui state-freeze
+        document.querySelector('.input-path-container-line').classList.add('state-freeze')
+        document.querySelectorAll('.table-line').forEach((line) => {
+            line.classList.add('state-freeze')
+        })
+        document.getElementById('scrape-select').classList.add('state-freeze')
+        document.getElementById('run-button').classList.add('state-freeze')
 
-            if (file.ignore) continue
+        //进度条初始化
+        progress_bar.init(`正在刮削 [${Object.values(file_table.file_list)[0].jav_number}] ...`, Object.keys(file_table.file_list).length)
+        let num = 0
 
-            let data = await pywebview.api.scraper_run(file.jav_number)
+        console.log(`准备开始刮削...`)
+
+        for (const _file in file_table.file_list) {
+            let file = file_table.file_list[_file]
+
+            if (num > 0) {
+                progress_bar.update(`正在刮削 [${file.jav_number}] ...`)
+            }
+            num = num + 1
+
+            if (file.ignore) {
+                console.log(`... [${file.jav_number}] 未勾选，跳过`)
+                continue
+            }
+            if (file.state !== '等待') {
+                console.log(`... [${file.jav_number}] 已刮削，跳过`)
+                continue
+            }
+
+            let title_suffix = file.long_jav_number.replace(file.jav_number, '')
+
+            //刮削
+            let data = await pywebview.api.scraper_run(file.jav_number, title_suffix, file.path, file_table.scrape)
+
             let state_text = ''
             switch (data) {
                 case 0:
@@ -237,6 +268,18 @@ function init () {
             }
             file_table.change_state(_file, state_text)
         }
+
+        progress_bar.update(`刮削完成`)
+
+        //解冻
+        document.querySelector('.input-path-container-line').classList.remove('state-freeze')
+        document.querySelectorAll('.table-line').forEach((line) => {
+            line.classList.remove('state-freeze')
+        })
+        document.getElementById('scrape-select').classList.remove('state-freeze')
+        document.getElementById('run-button').classList.remove('state-freeze')
+
+        console.log('刮削完成')
     }
 }
 

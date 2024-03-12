@@ -257,9 +257,11 @@ class Scraper(BaseScraper):
 
             # 保存图片
             if cover_img is not None:
+                self.image_editor.save(cover_img, f'{photo_path}/poster.jpg')
+                self.image_editor.save(cover_img, f'{photo_path}/thumb.jpg')
+
+                # fanart超分放大
                 _img = self.image_editor.super_resolution(cover_img)
-                self.image_editor.save(_img, f'{photo_path}/poster.jpg')
-                self.image_editor.save(_img, f'{photo_path}/thumb.jpg')
                 self.image_editor.save(_img, f'{photo_path}/fanart.jpg')
 
             # 保存剧照
