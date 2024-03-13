@@ -1,5 +1,7 @@
 class Video:
     def __init__(self):
+        self.scraper = ''
+
         self.title = ''
         self.originaltitle = ''
         self.sorttitle = ''

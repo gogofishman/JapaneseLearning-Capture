@@ -61,6 +61,8 @@ class Nfo:
         self.add_element('fanart', 'fanart.jpg')
         self.add_element('fanart', 'thumb.jpg')
 
+        self.add_element('scraper', video.scraper)
+
         xml_format(self.xml)
 
     def save(self):

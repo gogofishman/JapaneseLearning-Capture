@@ -80,19 +80,19 @@ class Api(Config):
             }
         return video_dict
 
-    def scraper_run(self, video_title: str, video_title_suffix: str, file_path: str, _type: str = 'JavDB') -> int:
+    def scraper_run(self, video_title: str, video_title_suffix: str, file_path: str, scraper: str = 'JavDB') -> int:
         """
         开始刮削
         :param video_title_suffix:后缀，如-C,-U
         :param video_title:视频标题
         :param file_path:视频源文件完整地址
-        :param _type:刮削器名称
+        :param scraper:刮削器名称
         :return: 0 成功 ，-1 失败 ，1 有误
         """
         queue = multiprocessing.Queue()
 
         p = multiprocessing.Process(target=scraper_run,
-                                    args=(queue, self, video_title, video_title_suffix, file_path, _type))
+                                    args=(queue, self, video_title, video_title_suffix, file_path, scraper))
         p.start()
         result = queue.get()
 
