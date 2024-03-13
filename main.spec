@@ -5,7 +5,11 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('plugins/*.py','plugins'),('gui','gui')],
+    datas=[
+        ('plugins/*.py','plugins'),
+        ('gui','gui'),
+        ('venv/Lib/site-packages/realesrgan_ncnn_py/models/realesrgan-x4plus*','realesrgan_ncnn_py/models')
+    ],
     hiddenimports=['bs4'],
     hookspath=[],
     hooksconfig={},

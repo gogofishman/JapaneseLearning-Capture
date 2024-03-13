@@ -21,15 +21,12 @@ class ImageEditor:
         else:
             image.save(path)
 
-    def super_resolution(self, image: Image | bytes, model=4) -> Image:
+    def super_resolution(self, image: Image | bytes, model=1) -> Image:
         """
         使用Realesrgan超分，如果超分失败则返回原图（如显卡不支持）
 
-        0: realesr-animevideov3-x2\n
-        1: realesr-animevideov3-x3\n
-        2: realesr-animevideov3-x4\n
-        3: realesrgan-x4plus-anime\n
-        4: realesrgan-x4plus
+        0: realesrgan-x4plus-anime\n
+        1: realesrgan-x4plus
         :param image:
         :param model: 超分模型
         :return:
@@ -38,6 +35,8 @@ class ImageEditor:
             image = self.bytes_to_image(image)
 
         try:
+            model = 1 if model != 0 else 0
+            model += 3
             realesrgan = Realesrgan(model=model)
             img = realesrgan.process_pil(image)
             return img

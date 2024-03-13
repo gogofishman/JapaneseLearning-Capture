@@ -211,6 +211,23 @@ function init () {
     //开始刮削
     let runButton = document.getElementById('run-button')
     runButton.onclick = async () => {
+        //获取所有需要刮削的文件
+        let list = {}
+        for (const _file in file_table.file_list) {
+            let file = file_table.file_list[_file]
+            if (file.selected === false) {
+                console.log(`... [${file.jav_number}] 未勾选，跳过`)
+                continue
+            }
+            if (file.state !== '等待') {
+                console.log(`... [${file.jav_number}] 已刮削，跳过`)
+                continue
+            }
+            list[_file] = file
+        }
+
+        if (Object.keys(list).length === 0) return
+
         //冻结部分ui state-freeze
         document.querySelector('.input-path-container-line').classList.add('state-freeze')
         document.querySelectorAll('.table-line').forEach((line) => {
@@ -219,28 +236,20 @@ function init () {
         document.getElementById('scrape-select').classList.add('state-freeze')
         document.getElementById('run-button').classList.add('state-freeze')
 
+
         //进度条初始化
-        progress_bar.init(`正在刮削 [${Object.values(file_table.file_list)[0].jav_number}] ...`, Object.keys(file_table.file_list).length)
+        progress_bar.init(`正在刮削 [${Object.values(list)[0].jav_number}] ...`, Object.keys(list).length)
         let num = 0
 
         console.log(`准备开始刮削...`)
 
-        for (const _file in file_table.file_list) {
-            let file = file_table.file_list[_file]
+        for (const _file in list) {
+            let file = list[_file]
 
             if (num > 0) {
                 progress_bar.update(`正在刮削 [${file.jav_number}] ...`)
             }
             num = num + 1
-
-            if (file.ignore) {
-                console.log(`... [${file.jav_number}] 未勾选，跳过`)
-                continue
-            }
-            if (file.state !== '等待') {
-                console.log(`... [${file.jav_number}] 已刮削，跳过`)
-                continue
-            }
 
             let title_suffix = file.long_jav_number.replace(file.jav_number, '')
 

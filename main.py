@@ -1,6 +1,8 @@
+import multiprocessing
 import webview
 
 from api import debug, window
+from api.pathHelper import path_helper
 
 
 def evaluate_js(window_):
@@ -14,6 +16,13 @@ def evaluate_js(window_):
 
 
 if __name__ == '__main__':
+    multiprocessing.freeze_support()
+
+    path_helper.init(__file__)
+
     debug.logging.debug('加载GUI界面...')
 
-    webview.start(evaluate_js, window)
+    webview.start(evaluate_js, window, debug=False)
+
+
+

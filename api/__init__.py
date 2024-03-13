@@ -13,6 +13,7 @@ from .videoClass import Video
 from .debug import logging
 from .window import setup_all_windows_borderless, window_resize_start, window_resize_update
 from .scraper_run_func import scraper_run
+from .pathHelper import path_helper
 
 
 class Api(Config):
@@ -20,18 +21,17 @@ class Api(Config):
     module_list: dict[str, ModuleType] = {}
     """保存所有刮削器的文件模块字典"""
     window_max: bool = False
+    scraper_run_subProcess: multiprocessing.Process = None
 
     def __init__(self):
         super().__init__()
 
         # 加载全部Scraper文件
-        path = os.path.dirname(__file__).replace('api', 'plugins')
+        path = path_helper.data_dir.joinpath('plugins')
 
-        for file in os.listdir(path):
-            if not file.endswith('.py') or file == '__init__.py':
-                continue
-
-            module = importlib.import_module(f'plugins.{file[:-3]}')
+        for file in path.glob('*.py'):
+            module_name = file.stem
+            module = importlib.import_module(f'plugins.{module_name}')
 
             # 检查模块是否含Scraper类
             try:
@@ -40,8 +40,8 @@ class Api(Config):
             except Exception:
                 continue
 
-            Api.module_list[file[:-3]] = module
-            logging.debug(f'加载刮削器 "{file[:-3]}" 成功!')
+            Api.module_list[module_name] = module
+            logging.debug(f'加载刮削器 "{module_name}" 成功!')
 
     def get_all_scraper(self) -> list[str]:
         """获取所有刮削器"""
@@ -64,7 +64,7 @@ class Api(Config):
                 continue
             size = os.stat(file_path).st_size / (1024 ** 2)
 
-            if self.ignore_100mb() == 'True':
+            if self.ignore_100mb():
                 if size < 100:
                     continue
 
@@ -91,12 +91,15 @@ class Api(Config):
         """
         queue = multiprocessing.Queue()
 
-        p = multiprocessing.Process(target=scraper_run,
-                                    args=(queue, self, video_title, video_title_suffix, file_path, scraper))
-        p.start()
+        self.scraper_run_subProcess = multiprocessing.Process(target=scraper_run,
+                                                              args=(
+                                                                  queue, self, video_title, video_title_suffix,
+                                                                  file_path,
+                                                                  scraper))
+        self.scraper_run_subProcess.start()
         result = queue.get()
 
-        p.join()
+        self.scraper_run_subProcess.join()
         return result
 
     def test_translate(self, text):
@@ -115,6 +118,7 @@ class Api(Config):
 
     def window_close(self):
         window.destroy()
+        self.scraper_run_subProcess.terminate()
         sys.exit()
 
     def window_resize_start(self):

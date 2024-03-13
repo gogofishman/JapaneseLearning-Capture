@@ -1,5 +1,4 @@
 # 配置文件相关
-import configparser
 import json
 import os
 
