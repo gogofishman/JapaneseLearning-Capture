@@ -25,13 +25,13 @@ class Api(Config):
         super().__init__()
 
         # 加载全部Scraper文件
-        path = os.path.dirname(__file__).replace('api', 'scraper')
+        path = os.path.dirname(__file__).replace('api', 'plugins')
 
         for file in os.listdir(path):
             if not file.endswith('.py') or file == '__init__.py':
                 continue
 
-            module = importlib.import_module(f'scraper.{file[:-3]}')
+            module = importlib.import_module(f'plugins.{file[:-3]}')
 
             # 检查模块是否含Scraper类
             try:

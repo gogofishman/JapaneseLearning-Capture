@@ -16,4 +16,4 @@ def evaluate_js(window_):
 if __name__ == '__main__':
     debug.logging.debug('加载GUI界面...')
 
-    webview.start(evaluate_js, window, debug=True)
+    webview.start(evaluate_js, window)
