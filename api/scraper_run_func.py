@@ -1,21 +1,24 @@
 import os
 from multiprocessing import Queue
-
 from .debug import logging
 from .videoClass import Video
 from scraper import BaseScraper
 
 
-def scraper_run(queue: Queue, self, video_title: str, video_title_suffix: str, file_path: str, scraper: str = 'JavDB'):
+def scraper_run(queue: Queue, self, video_title: str, video_title_suffix: str, file_path: str,
+                scraper: str = 'JavDB'):
     try:
         def log(text):
             logging.log(f'[{scraper}] [{video_title}] {text}')
+            queue.put(f'[LOG] [{scraper}] [{video_title}] {text}')
 
         def warning(text):
             logging.warning(f'[{scraper}] [{video_title}] {text}')
+            queue.put(f'[WARNING] [{scraper}] [{video_title}] {text}')
 
         def error(text):
             logging.error(f'[{scraper}] [{video_title}] {text}')
+            queue.put(f'[ERROR] [{scraper}] [{video_title}] {text}')
 
         mistaken = False
         video = Video()

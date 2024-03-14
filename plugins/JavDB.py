@@ -35,6 +35,9 @@ def get_info(web_page, key: str, text: bool = True):
 class Scraper(BaseScraper):
     """JavDB刮削器"""
 
+    def document(self) -> str:
+        pass
+
     def check_connect(self) -> bool:
         pass
 

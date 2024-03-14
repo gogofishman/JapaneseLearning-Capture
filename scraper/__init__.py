@@ -43,6 +43,10 @@ class BaseScraper(ABC):
         return self._data
 
     @abstractmethod
+    def document(self) -> str:
+        """返回一段字符串，用于显示ui界面的刮削器帮助"""
+
+    @abstractmethod
     def check_connect(self) -> bool:
         """
         检查刮削器用到的网站是否都能成功连接

@@ -2,7 +2,7 @@ import multiprocessing
 import webview
 
 from api import debug, window
-from api.pathHelper import path_helper
+from helper.pathHelper import path_helper
 
 
 def evaluate_js(window_):

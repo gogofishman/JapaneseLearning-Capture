@@ -13,7 +13,7 @@ from .videoClass import Video
 from .debug import logging
 from .window import setup_all_windows_borderless, window_resize_start, window_resize_update
 from .scraper_run_func import scraper_run
-from .pathHelper import path_helper
+from helper.pathHelper import path_helper
 
 
 class Api(Config):
@@ -31,6 +31,9 @@ class Api(Config):
 
         for file in path.glob('*.py'):
             module_name = file.stem
+            if module_name == 'example':
+                continue
+
             module = importlib.import_module(f'plugins.{module_name}')
 
             # 检查模块是否含Scraper类
@@ -91,16 +94,19 @@ class Api(Config):
         """
         queue = multiprocessing.Queue()
 
-        self.scraper_run_subProcess = multiprocessing.Process(target=scraper_run,
-                                                              args=(
-                                                                  queue, self, video_title, video_title_suffix,
-                                                                  file_path,
-                                                                  scraper))
-        self.scraper_run_subProcess.start()
-        result = queue.get()
+        Api.scraper_run_subProcess = multiprocessing.Process(target=scraper_run,
+                                                              args=(queue, self, video_title, video_title_suffix,
+                                                                    file_path, scraper))
+        Api.scraper_run_subProcess.start()
 
-        self.scraper_run_subProcess.join()
-        return result
+        while True:
+            result = queue.get()
+
+            # 数字表示刮削结束，字符串则实时向发送进度信息
+            if isinstance(result, int):
+                return result
+
+            window.evaluate_js(f"console.log('{result}')")
 
     def test_translate(self, text):
         return scraper.translator.translate(text)
@@ -109,12 +115,12 @@ class Api(Config):
         window.minimize()
 
     def window_maximize(self):
-        if self.window_max:
+        if Api.window_max:
             window.restore()
         else:
             window.maximize()
 
-        self.window_max = not self.window_max
+        Api.window_max = not Api.window_max
 
     def window_close(self):
         window.destroy()
@@ -129,6 +135,6 @@ class Api(Config):
 
 
 api = Api()
-window = webview.create_window('日语学习刮削器', 'gui/window.html', js_api=api
+window = webview.create_window('', 'gui/window.html', js_api=api
                                , width=1024, height=650, frameless=True, easy_drag=False)
 window.events.loaded += setup_all_windows_borderless

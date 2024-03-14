@@ -1,0 +1,11 @@
+.help-container {
+    box-sizing: border-box;
+    height: 100%;
+    border-left: var(--size-border) solid var(--color-background-alter2);
+    background-color: var(--color-background);
+
+    & .help-container-body {
+        height: calc(100% - 60px);
+        overflow: auto;
+    }
+}
