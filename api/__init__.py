@@ -45,6 +45,7 @@ class Api(Config):
             Api.module_list[module_name] = module
             Helper.logging.debug(f'加载刮削器 "{module_name}" 成功!')
 
+
     def get_all_scraper(self) -> list[str]:
         """获取所有刮削器"""
         return list(self.module_list.keys())

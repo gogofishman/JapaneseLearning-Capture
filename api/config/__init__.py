@@ -11,8 +11,6 @@ class Config:
 
     def __init__(self):
 
-        Helper.logging.debug('开始加载ini配置文件...')
-
         self._select_scraper = 'JavDB'
         self._check_update = True
         self._ignore_100mb = True
@@ -39,6 +37,8 @@ class Config:
             }
         }
 
+    def init(self):
+        Helper.logging.debug('开始加载ini配置文件...')
         self._read()
         self._write()
 

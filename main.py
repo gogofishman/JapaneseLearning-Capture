@@ -3,6 +3,8 @@ import webview
 
 from yolib import Helper
 
+Helper.init()
+
 
 def evaluate_js(window_):
     """在api之后加载的js函数"""
@@ -16,9 +18,9 @@ def evaluate_js(window_):
 
 if __name__ == '__main__':
     multiprocessing.freeze_support()
-    Helper.init()
+    from api import window, api
 
-    from api import window
+    api.init()
 
     Helper.logging.debug('加载GUI界面...')
     webview.start(evaluate_js, window, debug=True)
