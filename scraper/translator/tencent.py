@@ -8,7 +8,7 @@ import json
 
 from urllib.parse import quote
 
-from api.debug import logging
+from yolib import Helper
 
 
 def _tencent_get_url_encoded_params(text, id_, key, target_language):
@@ -65,5 +65,5 @@ def translate_tencent(text, id_, key, target_language='zh'):
         trans_text = json_res['Response']['TargetText']
         return trans_text
     except Exception:
-        logging.debug(f'tencent翻译失败！文本：{text}')
+        Helper.logging.debug(f'tencent翻译失败！文本：{text}')
         return None

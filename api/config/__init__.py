@@ -3,7 +3,7 @@ import json
 import os
 
 import scraper
-from api.debug import logging
+from yolib import Helper
 
 
 class Config:
@@ -11,7 +11,7 @@ class Config:
 
     def __init__(self):
 
-        logging.debug('开始加载ini配置文件...')
+        Helper.logging.debug('开始加载ini配置文件...')
 
         self._check_update = True
         self._ignore_100mb = True
@@ -72,13 +72,13 @@ class Config:
             'key': self.translate_baidu_key()
         }
 
-        logging.debug('写入config.json配置文件成功')
+        Helper.logging.debug('写入config.json配置文件成功')
 
     def _read(self):
         # 检查文件是否存在
         if not os.path.exists("data\\config.json"):
             self._write()
-            logging.debug('找不到配置文件，已新建config.json文件')
+            Helper.logging.debug('找不到配置文件，已新建config.json文件')
 
         with open('data\\config.json', 'r', encoding='utf-8') as f:
             dict_ = json.load(f)

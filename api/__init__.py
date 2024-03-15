@@ -7,13 +7,12 @@ import webview
 from types import ModuleType
 
 import scraper
-from .config import Config
+from api.config import Config
 from .get_jav_number import get_jav_number
 from .videoClass import Video
-from .debug import logging
 from .window import setup_all_windows_borderless, window_resize_start, window_resize_update
 from .scraper_run_func import scraper_run
-from helper.pathHelper import path_helper
+from yolib import Helper
 
 
 class Api(Config):
@@ -27,7 +26,7 @@ class Api(Config):
         super().__init__()
 
         # 加载全部Scraper文件
-        path = path_helper.data_dir.joinpath('plugins')
+        path = Helper.path.data_dir.joinpath('plugins')
 
         for file in path.glob('*.py'):
             module_name = file.stem
@@ -44,7 +43,7 @@ class Api(Config):
                 continue
 
             Api.module_list[module_name] = module
-            logging.debug(f'加载刮削器 "{module_name}" 成功!')
+            Helper.logging.debug(f'加载刮削器 "{module_name}" 成功!')
 
     def get_all_scraper(self) -> list[str]:
         """获取所有刮削器"""

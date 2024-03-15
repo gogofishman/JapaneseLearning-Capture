@@ -1,6 +1,6 @@
 import googletrans
 
-from api.debug import logging
+from yolib import Helper
 
 
 def translate_google(text: str, target_language='zh'):
@@ -9,5 +9,5 @@ def translate_google(text: str, target_language='zh'):
         result = google_trans.translate(text, dest=target_language).text
         return result
     except Exception:
-        logging.debug(f'google翻译失败！文本：{text}')
+        Helper.logging.debug(f'google翻译失败！文本：{text}')
         return None

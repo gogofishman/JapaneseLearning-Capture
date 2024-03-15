@@ -1,7 +1,7 @@
 import json
 import os
 
-from api.debug import logging
+from yolib import Helper
 
 
 class Data:
@@ -12,13 +12,13 @@ class Data:
     }
 
     def __init__(self):
-        logging.debug('开始加载data数据文件...')
+        Helper.logging.debug('开始加载data数据文件...')
 
         # 检查文件是否存在
         if not os.path.exists("data\\data.json"):
             self._write()
 
-            logging.debug('找不到data.json文件，已新建json文件')
+            Helper.logging.debug('找不到data.json文件，已新建json文件')
 
         with open('data\\data.json', 'r', encoding='utf-8') as f:
             self._dict = json.load(f)
@@ -35,7 +35,7 @@ class Data:
         """添加演员图片链接到data数据"""
         self._dict['actor_img_url'][actor_name] = img_url
         self._write()
-        logging.debug(f'添加演员"{actor_name}"的图片链接到data数据中')
+        Helper.logging.debug(f'添加演员"{actor_name}"的图片链接到data数据中')
 
 
 data = Data()

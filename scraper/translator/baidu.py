@@ -3,7 +3,7 @@ import json
 import requests
 import random
 
-from api.debug import logging
+from yolib import Helper
 
 
 class BaiduFanyi:
@@ -46,5 +46,5 @@ def translate_baidu(text, id_, key, target_language='zh'):
         Results = BaiduTranslate_test.translate(text, target_language)
         return Results
     except Exception:
-        logging.debug(f'百度翻译失败！文本：{text}')
+        Helper.logging.debug(f'百度翻译失败！文本：{text}')
         return None

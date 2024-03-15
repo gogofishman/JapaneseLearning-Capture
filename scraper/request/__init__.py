@@ -1,7 +1,7 @@
 import time
 from requests import Session, Response, RequestException
 
-from api.debug import logging
+from yolib import Helper
 
 
 class MySession(Session):
@@ -38,9 +38,9 @@ class MySession(Session):
                 response.raise_for_status()  # 检查响应状态码，如果不是 2xx，则抛出异常
                 return response
             except RequestException as e:
-                logging.debug(f"连接失败，正在进行第 {i + 1} 次重连... [{url}]")
+                Helper.logging.debug(f"连接失败，正在进行第 {i + 1} 次重连... [{url}]")
                 time.sleep(1)
-        logging.debug(f"连接失败，已达到最大重试次数。 [{url}]")
+        Helper.logging.debug(f"连接失败，已达到最大重试次数。 [{url}]")
         return None
 
     def post(self, url, data=None, json=None, **kwargs) -> Response | None:
@@ -65,9 +65,9 @@ class MySession(Session):
                 response.raise_for_status()  # 检查响应状态码，如果不是 2xx，则抛出异常
                 return response
             except RequestException as e:
-                logging.debug(f"连接失败，正在进行第 {i + 1} 次重连... [{url}]")
+                Helper.logging.debug(f"连接失败，正在进行第 {i + 1} 次重连... [{url}]")
                 time.sleep(1)
-        logging.debug(f"连接失败，已达到最大重试次数。 [{url}]")
+        Helper.logging.debug(f"连接失败，已达到最大重试次数。 [{url}]")
         return None
 
     def get_image(self, url: str, headers: dict[str, str] = None, cookies: dict[str, str] = None) -> bytes | None:
@@ -80,9 +80,9 @@ class MySession(Session):
                 response.raise_for_status()  # 检查响应状态码，如果不是 2xx，则抛出异常
                 return response.content
             except RequestException as e:
-                logging.debug(f"连接失败，正在进行第 {i + 1} 次重连... [{url}]")
+                Helper.logging.debug(f"连接失败，正在进行第 {i + 1} 次重连... [{url}]")
                 time.sleep(1)
-        logging.debug(f"连接失败，已达到最大重试次数。 [{url}]")
+        Helper.logging.debug(f"连接失败，已达到最大重试次数。 [{url}]")
         return None
 
 

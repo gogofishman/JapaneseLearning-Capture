@@ -1,7 +1,7 @@
 import opencc
 import re
 
-from api.debug import logging
+from yolib import Helper
 from .google import translate_google
 from .tencent import translate_tencent
 from .baidu import translate_baidu
@@ -31,7 +31,7 @@ class Translator:
             result = converter.convert(text)
             return result.strip()
         except Exception:
-            logging.debug(f'繁化简翻译失败！文本：{text}')
+            Helper.logging.debug(f'繁化简翻译失败！文本：{text}')
             return None
 
     @staticmethod
@@ -42,7 +42,7 @@ class Translator:
             result = converter.convert(text)
             return result.strip()
         except Exception:
-            logging.debug(f'简化繁翻译失败！文本：{text}')
+            Helper.logging.debug(f'简化繁翻译失败！文本：{text}')
             return None
 
     def translate(self, text: str) -> str | None:
