@@ -87,6 +87,11 @@
         border-radius: 50px;
         cursor: pointer;
 
+        & option {
+            background-color: var(--color-background-alter1);
+            color: var(--color-text);
+        }
+
         &:focus-visible {
             outline: none;
         }
@@ -162,6 +167,7 @@
         font-size: var(--size-text-small);
 
         & input[type="text"] {
+            font-family: user-font, sans-serif !important;
             width: 100%;
             text-align: center;
             background-color: transparent;

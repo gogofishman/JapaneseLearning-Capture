@@ -135,7 +135,14 @@ function init () {
     })
     scrape_select.onchange = () => {
         file_table.scrape = scrape_select.value
+        pywebview.api.select_scraper(scrape_select.value)
     }
+
+    pywebview.api.select_scraper().then((data) => {
+        if (data === null) return
+        scrape_select.value = data
+        file_table.scrape = data
+    })
 
     //翻译配置按钮
     let trans_api_button = document.getElementById('trans-api-button')

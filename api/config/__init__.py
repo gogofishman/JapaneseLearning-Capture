@@ -13,6 +13,7 @@ class Config:
 
         Helper.logging.debug('开始加载ini配置文件...')
 
+        self._select_scraper = 'JavDB'
         self._check_update = True
         self._ignore_100mb = True
         self._input_path = ""
@@ -87,6 +88,13 @@ class Config:
                     self.__dict__["_" + i] = dict_[i]
 
     # 使用函数来模拟get和set方便前端js直接调用
+
+    def select_scraper(self, value=None):
+        if value is None:
+            return self._select_scraper
+        else:
+            self._select_scraper = value
+            self._write()
 
     def check_update(self, value=None):
         if value is None:

@@ -21,4 +21,4 @@ if __name__ == '__main__':
     from api import window
 
     Helper.logging.debug('加载GUI界面...')
-    webview.start(evaluate_js, window, debug=False)
+    webview.start(evaluate_js, window, debug=True)

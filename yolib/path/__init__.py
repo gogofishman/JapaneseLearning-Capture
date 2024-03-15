@@ -27,13 +27,19 @@ class PathHelper:
         return pathlib.Path(sys.executable if getattr(sys, 'frozen', False) else caller_file_path).parent
 
     @staticmethod
-    def create_file(file_path: pathlib.Path | str):
-        """新建一个文件，中间路径也会跟着创建。如果已存在则忽略"""
+    def create_file(file_path: pathlib.Path | str, is_dir: bool = False):
+        """新建一个文件或路径，中间路径也会跟着创建。如果已存在则忽略"""
 
-        if not isinstance(file_path, pathlib.Path):
-            file_path = pathlib.Path(file_path)
+        if not file_path:
+            return
 
-        file_dir = file_path.parent
+        path = pathlib.Path(file_path) if isinstance(file_path, str) else file_path
 
-        file_dir.mkdir(parents=True, exist_ok=True)
-        file_path.touch(exist_ok=True)
+        if is_dir:
+            path.mkdir(parents=True, exist_ok=True)
+            return
+
+        dir_ = path.parent
+
+        dir_.mkdir(parents=True, exist_ok=True)
+        path.touch(exist_ok=True)

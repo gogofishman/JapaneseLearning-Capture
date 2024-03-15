@@ -25,22 +25,22 @@ class BaseScraper(ABC):
 
         自动配置了get、post方法的代理、超时、重连次数、连接间隔等网络连接设置
         """
-        return self._session
+        return BaseScraper._session
 
     @property
     def translator(self):
         """返回翻译器实例"""
-        return self._translator
+        return BaseScraper._translator
 
     @property
     def image_editor(self):
         """返回图片编辑器实例"""
-        return self._image_editor
+        return BaseScraper._image_editor
 
     @property
     def data(self):
         """返回data数据类实例"""
-        return self._data
+        return BaseScraper._data
 
     @abstractmethod
     def document(self) -> str:

@@ -28,5 +28,8 @@ def get_jav_number(file_name: str) -> tuple:
             uncensored = True
             subtitle = True
             jav_number = jav_number.replace('-UC', '').replace('-CU', '')
+    else:
+        jav_number = file_name
+        long_jav_number = file_name
 
     return jav_number, uncensored, subtitle, long_jav_number
