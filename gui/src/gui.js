@@ -1,3 +1,6 @@
+var is_scrapering = false
+var scraper_stop = false
+
 function init () {
     //改写右键
     document.addEventListener('contextmenu', function (event) {
@@ -218,6 +221,15 @@ function init () {
     //开始刮削
     let runButton = document.getElementById('run-button')
     runButton.onclick = async () => {
+        if (is_scrapering) {
+            runButton.innerHTML = '停止中'
+            scraper_stop = true
+            await pywebview.api.scraper_stop()
+            is_scrapering = false
+            return
+        }
+        is_scrapering = true
+
         //获取所有需要刮削的文件
         let list = {}
         for (const _file in file_table.file_list) {
@@ -236,13 +248,12 @@ function init () {
         if (Object.keys(list).length === 0) return
 
         //冻结部分ui state-freeze
+        runButton.innerHTML = '停止'
         document.querySelector('.input-path-container-line').classList.add('state-freeze')
         document.querySelectorAll('.table-line').forEach((line) => {
             line.classList.add('state-freeze')
         })
         document.getElementById('scrape-select').classList.add('state-freeze')
-        document.getElementById('run-button').classList.add('state-freeze')
-
 
         //进度条初始化
         progress_bar.init(`正在刮削 [${Object.values(list)[0].jav_number}] ...`, Object.keys(list).length)
@@ -251,6 +262,8 @@ function init () {
         console.log(`准备开始刮削...`)
 
         for (const _file in list) {
+            if (scraper_stop) break
+
             let file = list[_file]
 
             if (num > 0) {
@@ -281,14 +294,17 @@ function init () {
         progress_bar.update(`刮削完成`)
 
         //解冻
+        runButton.innerHTML = '刮削'
         document.querySelector('.input-path-container-line').classList.remove('state-freeze')
         document.querySelectorAll('.table-line').forEach((line) => {
             line.classList.remove('state-freeze')
         })
         document.getElementById('scrape-select').classList.remove('state-freeze')
-        document.getElementById('run-button').classList.remove('state-freeze')
 
         console.log('刮削完成')
+
+        is_scrapering = false
+        scraper_stop = false
     }
 }
 

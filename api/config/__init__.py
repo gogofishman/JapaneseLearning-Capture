@@ -37,7 +37,7 @@ class Config:
             }
         }
 
-    def init(self):
+    def config_init(self):
         Helper.logging.debug('开始加载ini配置文件...')
         self._read()
         self._write()

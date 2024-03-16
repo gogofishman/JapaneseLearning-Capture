@@ -21,6 +21,7 @@ class Api(Config):
     """保存所有刮削器的文件模块字典"""
     window_max: bool = False
     scraper_run_subProcess: multiprocessing.Process = None
+    scraper_run_queue = multiprocessing.Queue()
 
     def __init__(self):
         super().__init__()
@@ -44,7 +45,6 @@ class Api(Config):
 
             Api.module_list[module_name] = module
             Helper.logging.debug(f'加载刮削器 "{module_name}" 成功!')
-
 
     def get_all_scraper(self) -> list[str]:
         """获取所有刮削器"""
@@ -92,21 +92,30 @@ class Api(Config):
         :param scraper:刮削器名称
         :return: 0 成功 ，-1 失败 ，1 有误
         """
-        queue = multiprocessing.Queue()
 
         Api.scraper_run_subProcess = multiprocessing.Process(target=scraper_run,
-                                                              args=(queue, self, video_title, video_title_suffix,
-                                                                    file_path, scraper))
+                                                             args=(Api.scraper_run_queue, self, video_title,
+                                                                   video_title_suffix,file_path, scraper))
         Api.scraper_run_subProcess.start()
 
         while True:
-            result = queue.get()
+            result = Api.scraper_run_queue.get()
 
             # 数字表示刮削结束，字符串则实时向发送进度信息
             if isinstance(result, int):
                 return result
 
             window.evaluate_js(f"console.log('{result}')")
+
+    def scraper_stop(self):
+        try:
+            Api.scraper_run_subProcess.terminate()
+            Api.scraper_run_queue.put(1)
+
+            Helper.logging.log('刮削已手动停止')
+            return
+        except:
+            pass
 
     def test_translate(self, text):
         return scraper.translator.translate(text)
@@ -124,7 +133,10 @@ class Api(Config):
 
     def window_close(self):
         window.destroy()
-        self.scraper_run_subProcess.terminate()
+        try:
+            Api.scraper_run_subProcess.terminate()
+        except:
+            pass
         sys.exit()
 
     def window_resize_start(self):

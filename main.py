@@ -20,7 +20,8 @@ if __name__ == '__main__':
     multiprocessing.freeze_support()
     from api import window, api
 
-    api.init()
+    # 配置文件只在启动时初始化一次，刮削子进程中忽略
+    api.config_init()
 
     Helper.logging.debug('加载GUI界面...')
     webview.start(evaluate_js, window, debug=True)
