@@ -132,8 +132,8 @@ class Api(Config):
         Api.window_max = not Api.window_max
 
     def window_close(self):
-        window.destroy()
         try:
+            window.destroy()
             Api.scraper_run_subProcess.terminate()
         except:
             pass
