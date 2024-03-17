@@ -6,6 +6,16 @@
 
     & .help-container-body {
         height: calc(100% - 60px);
-        overflow: auto;
+        display: flex;
     }
+}
+
+.help-container-left{
+    width: 200px;
+    height: 100%;
+}
+
+.help-container-right{
+    flex: 1;
+    height: 100%;
 }
