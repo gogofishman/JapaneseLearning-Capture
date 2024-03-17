@@ -32,4 +32,4 @@ def get_jav_number(file_name: str) -> tuple:
         jav_number = file_name
         long_jav_number = file_name
 
-    return jav_number, uncensored, subtitle, long_jav_number
+    return jav_number.strip(), uncensored, subtitle, long_jav_number.strip()

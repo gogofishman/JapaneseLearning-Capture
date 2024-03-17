@@ -9,10 +9,7 @@ class Scraper(BaseScraper):
         pass
 
     def search_video_page(self, video_title: str) -> str | dict[str, str] | None:
-        # 访问搜索界面
-        search_url = (f'https://www.dlsite.com/pro/fsr/=/language/jp/keyword/{video_title}/work_type_category['
-                      f'0]/movie/from/fs.header')
-        lan = self.translator.translate_target
+        pass
 
     def parse_title(self, web_page: str | dict[str, str]) -> tuple[str, str, str, str] | None:
         pass
