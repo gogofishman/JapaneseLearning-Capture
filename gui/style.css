@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
     --color-tip: #8630fe;
     --color-tip-light: #9e5afd;
